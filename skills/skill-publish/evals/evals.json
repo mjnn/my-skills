@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "正常发布流程",
+    "prompt": "把 feishu-bitable-setup 发布到 my-skills，版本 v1.0.0",
+    "expected_output": "Agent 读取本地 skill → 质量验证通过 → 收集文件 → 检查远程无冲突 → 上传到 GitHub → 更新 registry → 输出发布报告",
+    "assertions": [
+      "质量验证步骤必须在 GitHub 上传之前执行",
+      "commit message 包含 skill 名称和版本号",
+      "registry.json 被更新且包含该 skill 条目",
+      "发布报告包含 GitHub 链接"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "质量验证不通过时中止",
+    "prompt": "把这个 skill 发布到 my-skills（假设该 skill 的 SKILL.md 缺少 name 字段）",
+    "expected_output": "Agent 在质量验证阶段发现 frontmatter 不完整，列出不通过项，中止发布",
+    "assertions": [
+      "Agent 明确列出了不通过的验证项",
+      "Agent 没有执行任何 GitHub 上传操作",
+      "Agent 建议修复后重试"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "远程冲突时询问用户",
+    "prompt": "把 skill-publish 发布到 my-skills v1.0.0（假设远程已存在 skills/skill-publish/）",
+    "expected_output": "Agent 检测到远程路径已存在，列出已有文件，询问用户覆盖/跳过/取消",
+    "assertions": [
+      "Agent 检测到冲突并列出已有文件",
+      "Agent 明确给出三个选项（覆盖/跳过/取消）",
+      "Agent 等待用户选择而不是自动覆盖"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "用户未指定路径时推断",
+    "prompt": "把这个 skill 发布到 my-skills",
+    "expected_output": "Agent 根据当前上下文推断目标 skill（如刚创建/刚修改的 skill），推断不出则询问路径",
+    "assertions": [
+      "Agent 尝试根据上下文推断目标 skill",
+      "若上下文不足则明确询问路径",
+      "不会在不确定目标的情况下继续"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "硬编码凭证检测",
+    "prompt": "把这个 skill 发布到 my-skills（假设 SKILL.md 中包含 'api_key=sk-xxx'）",
+    "expected_output": "Agent 在安全扫描中发现硬编码凭证，报告中止并指出具体位置",
+    "assertions": [
+      "Agent 扫描到了硬编码凭证",
+      "Agent 明确指出了凭证所在位置",
+      "Agent 中止上传"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "文件过滤排除 PITFALLS_LOG.md",
+    "prompt": "把 skill-bootstrap 发布到 my-skills v1.0.0（本地 evals/ 目录包含 PITFALLS_LOG.md）",
+    "expected_output": "Agent 收集文件时跳过了 PITFALLS_LOG.md，不上传该文件",
+    "assertions": [
+      "PITFALLS_LOG.md 不在上传文件列表中",
+      "其他 eval 文件正常上传"
+    ]
+  }
+]

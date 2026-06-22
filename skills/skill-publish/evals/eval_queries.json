@@ -1,0 +1,102 @@
+[
+  {
+    "query": "把这个skill发布到my-skills",
+    "should_trigger": true,
+    "reason": "直接命中「发布」+「my-skills」关键词"
+  },
+  {
+    "query": "上传这个skill到云端仓库",
+    "should_trigger": true,
+    "reason": "「上传」+「云端仓库」匹配发布语义"
+  },
+  {
+    "query": "入库",
+    "should_trigger": true,
+    "reason": "触发词之一，含义为归档到仓库"
+  },
+  {
+    "query": "推送到skill仓库",
+    "should_trigger": true,
+    "reason": "「推送」+「skill仓库」匹配发布语义"
+  },
+  {
+    "query": "发布 skill-publish 到 GitHub",
+    "should_trigger": true,
+    "reason": "「发布」+ 具体 skill 名称 + GitHub 目标"
+  },
+  {
+    "query": "把这个skill传到云端",
+    "should_trigger": true,
+    "reason": "「传到云端」匹配云端发布语义"
+  },
+  {
+    "query": "存档这个skill到我的仓库",
+    "should_trigger": true,
+    "reason": "「存档」+「我的仓库」匹配归档语义"
+  },
+  {
+    "query": "publish this skill to my-skills",
+    "should_trigger": true,
+    "reason": "英文触发，publish + skill + my-skills"
+  },
+  {
+    "query": "帮我推到 my-skills",
+    "should_trigger": true,
+    "reason": "「推到」+ my-skills 目标明确"
+  },
+  {
+    "query": "上传到 skill 仓库，版本 1.0",
+    "should_trigger": true,
+    "reason": "「上传」+「skill 仓库」+ 版本号"
+  },
+  {
+    "query": "创建一个新的skill",
+    "should_trigger": false,
+    "reason": "应走 skill-bootstrap，非发布流程"
+  },
+  {
+    "query": "帮我改一下这个skill的description",
+    "should_trigger": false,
+    "reason": "编辑已有 skill 内容，非发布"
+  },
+  {
+    "query": "检查这个skill的质量",
+    "should_trigger": false,
+    "reason": "纯审计操作，非发布"
+  },
+  {
+    "query": "列出所有skill",
+    "should_trigger": false,
+    "reason": "查询操作，不涉及上传"
+  },
+  {
+    "query": "这个skill能不能用",
+    "should_trigger": false,
+    "reason": "near-miss：询问可用性，含「skill」关键词但不涉及发布"
+  },
+  {
+    "query": "skill 上传失败了怎么办",
+    "should_trigger": false,
+    "reason": "near-miss：故障排查咨询，含「上传」关键词但不请求执行上传"
+  },
+  {
+    "query": "my-skills 仓库里有哪些skill",
+    "should_trigger": false,
+    "reason": "near-miss：查询仓库内容，含「my-skills」关键词但不请求发布"
+  },
+  {
+    "query": "把这个文件传到 GitHub",
+    "should_trigger": false,
+    "reason": "near-miss：传的是普通文件不是 skill，含「传到」关键词但对象不匹配"
+  },
+  {
+    "query": "更新一下 registry",
+    "should_trigger": false,
+    "reason": "near-miss：手动更新 registry 而非完整发布流程，含「registry」关键词"
+  },
+  {
+    "query": "帮我下载这个 skill",
+    "should_trigger": false,
+    "reason": "方向相反：下载而非上传"
+  }
+]
