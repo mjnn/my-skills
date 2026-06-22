@@ -1,0 +1,64 @@
+name: README Index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'registry.json'
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 生成 Skill 索引并更新 README
+        run: |
+          set -e
+
+          # 构建表格
+          TABLE="| Skill | 平台 | 说明 |"
+          TABLE="${TABLE}\n|-------|------|------|"
+
+          for SKILL_DIR in skills/*/; do
+            [ -d "$SKILL_DIR" ] || continue
+            SKILL_NAME=$(basename "$SKILL_DIR")
+            SKILL_MD="${SKILL_DIR}SKILL.md"
+
+            if [ -f "$SKILL_MD" ]; then
+              DESC=$(sed -n '/^---$/,/^---$/p' "$SKILL_MD" | grep '^description:' | head -1 | sed 's/^description: *//' | tr -d '\r')
+              # 截取第一句话（到第一个句号）
+              DESC=$(echo "$DESC" | sed 's/\.[^.]*$/./')
+
+              # 从 registry 获取 platform
+              PLATFORM=$(jq -r ".skills[] | select(.name == \"$SKILL_NAME\") | .platform // \"unknown\"" registry.json)
+              [ "$PLATFORM" = "hana" ] && PLATFORM="HanaAgent"
+              [ "$PLATFORM" = "cursor" ] && PLATFORM="Cursor"
+              [ "$PLATFORM" = "universal" ] && PLATFORM="通用"
+
+              TABLE="${TABLE}\n| [${SKILL_NAME}](skills/${SKILL_NAME}) | ${PLATFORM} | ${DESC} |"
+            fi
+          done
+
+          # 替换 README 中的标记区域
+          perl -i -0777 -pe "s|(<!-- SKILLS_TABLE_START -->).*(<!-- SKILLS_TABLE_END -->)|\1\n${TABLE}\n\n\2|s" README.md
+
+          echo "生成的表格："
+          echo -e "$TABLE"
+
+      - name: 提交更新
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet README.md; then
+            echo "README 无变化，跳过提交"
+          else
+            git add README.md
+            git commit -m "docs: 自动更新 Skill 索引"
+            git push
+            echo "✅ README 索引已更新"
+          fi

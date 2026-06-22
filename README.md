@@ -24,6 +24,7 @@
 my-skills/
 ├── README.md              # 本文件
 ├── registry.json          # Skill 注册表（含 platform 元数据）
+├── .github/workflows/     # CI 流水线
 ├── skills/                # Skill 归档目录（多平台共用）
 │   └── <skill-name>/      # 单个 Skill 目录
 │       ├── SKILL.md       # 核心 Skill 定义（必需）
@@ -41,6 +42,17 @@ my-skills/
 | 自检机制 | 至少一个 smoke test 或 sanity check |
 | 安全审查 | 无硬编码凭证、无任意命令注入风险 |
 | 功能边界 | 单一职责，不与已有 Skill 高度重叠 |
+
+## 已收录 Skill
+
+<!-- SKILLS_TABLE_START -->
+
+| Skill | 平台 | 说明 |
+|-------|------|------|
+| [skill-publish](skills/skill-publish) | HanaAgent | 将本地高可用 Skill 发布到 mjnn/my-skills 云端仓库。 |
+| [skill-bootstrap](skills/skill-bootstrap) | HanaAgent | 新建技能时的质量引导与门禁检查。 |
+
+<!-- SKILLS_TABLE_END -->
 
 ## 快速使用
 
