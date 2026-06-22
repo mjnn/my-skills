@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated": "2026-06-22T02:20:00Z",
+  "updated": "2026-06-22T05:15:00Z",
   "description": "马捷个人 Skill 注册表，多平台兼容（HanaAgent / Cursor / 通用）",
   "skills": [
     {
@@ -12,6 +12,18 @@
       "quality": {
         "gated": true,
         "evalCoverage": "6 条 eval 用例 + 20 条触发测试（含 5 near-miss）",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "skill-bootstrap",
+      "platform": "hana",
+      "description": "新建技能时的质量引导与门禁检查，5 步流程 7 门禁标准",
+      "version": "0.1.0",
+      "path": "skills/skill-bootstrap",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "7 条 eval 用例 + 22 条触发测试（含 3 near-miss）",
         "securityReviewed": true
       }
     }
