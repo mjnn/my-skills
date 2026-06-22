@@ -1,11 +1,18 @@
 # hana-skills
 
-> HanaAgent 高潜力 Skill 云端仓库  
-> 经过质量门控验证的高可用 Skill 归档与分发中心
+> 马捷个人 Skill 云端仓库  
+> 多平台兼容 · 质量门控 · 宁缺毋滥
 
 ## 仓库定位
 
-本仓库是 [HanaAgent](https://github.com/liliMozi/openhanako) 生态的官方 Skill 分发节点。收录的每一个 Skill 都经过了：
+本仓库是个人 AI 编码 Skill 的统一云端归档与分发节点，支持多平台：
+
+| 平台 | 说明 |
+|------|------|
+| **HanaAgent** | 基于 OpenHanako 的个人 Agent 体系，通过 `install_skill` 安装 |
+| **Cursor** | AI 编辑器，通过 `.cursor/rules/` 或项目级引入 |
+
+收录的每一个 Skill 都经过：
 
 - **质量门控**：SKILL.md 完整性 + evals 覆盖率 + 自检机制
 - **可用性验证**：至少一次端到端实战验证
@@ -16,8 +23,8 @@
 ```
 hana-skills/
 ├── README.md              # 本文件
-├── registry.json          # Skill 注册表（索引 + 元数据）
-├── skills/                # Skill 归档目录
+├── registry.json          # Skill 注册表（含 platform 元数据）
+├── skills/                # Skill 归档目录（多平台共用）
 │   └── <skill-name>/      # 单个 Skill 目录
 │       ├── SKILL.md       # 核心 Skill 定义（必需）
 │       ├── evals/         # 评估用例（推荐）
@@ -37,18 +44,23 @@ hana-skills/
 
 ## 快速使用
 
-在 HanaAgent 中安装 Skill：
+**HanaAgent**
 
 ```
 install_skill from github: mjnn/hana-skills/skills/<skill-name>
 ```
 
+**Cursor**
+
+将 `SKILL.md` 内容复制到 `.cursor/rules/` 目录下，或直接引入仓库子目录。
+
 ## 贡献
 
-欢迎提交 PR，但需附上：
+欢迎提交 PR，需附上：
 1. Skill 的功能说明与使用场景
 2. 至少一条 eval 用例
-3. 与其他 Skill 的差异说明（如有重叠）
+3. 目标平台（HanaAgent / Cursor / 通用）
+4. 与已有 Skill 的差异说明（如有重叠）
 
 ---
 
