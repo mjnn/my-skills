@@ -1,6 +1,20 @@
 {
   "version": "1.0.0",
   "updated": "2026-06-22T02:00:00Z",
-  "description": "HanaAgent Skill 注册表，收录所有经过质量门控验证的高可用 Skill",
-  "skills": []
+  "description": "马捷个人 Skill 注册表，多平台兼容（HanaAgent / Cursor / 通用）",
+  "skills": [],
+  "_schema": {
+    "skillEntry": {
+      "name": "string — Skill 名称（小写+连字符）",
+      "platform": "hana | cursor | universal — 目标平台",
+      "description": "string — 一句话描述",
+      "version": "string — 语义化版本",
+      "path": "string — 仓库内路径，如 skills/feishu-bitable-setup",
+      "quality": {
+        "gated": "boolean — 是否通过质量门控",
+        "evalCoverage": "string — eval 覆盖说明",
+        "securityReviewed": "boolean — 是否通过安全审查"
+      }
+    }
+  }
 }
