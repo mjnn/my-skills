@@ -1,0 +1,112 @@
+[
+  {
+    "query": "帮我新建一个skill",
+    "should_trigger": true,
+    "reason": "直接使用「新建skill」关键词"
+  },
+  {
+    "query": "我要创建一个数据分析的技能，用于CSV文件的自动画像",
+    "should_trigger": true,
+    "reason": "「创建技能」+ 具体需求描述"
+  },
+  {
+    "query": "按照Skill Hub的标准写一个skill，功能是数据库连接池监控",
+    "should_trigger": true,
+    "reason": "「写一个skill」+ 提到 Skill Hub 标准"
+  },
+  {
+    "query": "给我一个skill模板，我要开始做一个新的agent技能",
+    "should_trigger": true,
+    "reason": "「skill模板」+「新的agent技能」"
+  },
+  {
+    "query": "帮我把这个想法变成一个正式的 skill，叫 api-gateway-monitor",
+    "should_trigger": true,
+    "reason": "「变成正式的 skill」+ 提供了名称"
+  },
+  {
+    "query": "从零开始引导我建一个 skill，我不熟悉流程",
+    "should_trigger": true,
+    "reason": "「从零开始建 skill」+ 明确需要引导"
+  },
+  {
+    "query": "用 bootstrap 模式建个新技能",
+    "should_trigger": true,
+    "reason": "「bootstrap」+「新技能」"
+  },
+  {
+    "query": "我想在skill-hub里发布一个新技能，帮我走一遍完整流程",
+    "should_trigger": true,
+    "reason": "「在skill-hub发布新技能」+「完整流程」"
+  },
+  {
+    "query": "我要按 Skill Hub 标准创建一个 agent skill 用于数据库慢查询分析",
+    "should_trigger": true,
+    "reason": "「按 Skill Hub 标准创建 skill」——触发关键词链完整"
+  },
+  {
+    "query": "帮我看看evals/eval_queries.json写得对不对",
+    "should_trigger": false,
+    "reason": "询问的是已有 skill 的 eval 文件审查，不是创建新 skill"
+  },
+  {
+    "query": "requirement-briefing 这个 skill 的 Gotchas 覆盖不全，帮我优化一下",
+    "should_trigger": false,
+    "reason": "修改已有 skill 的 Gotchas，不是创建新 skill"
+  },
+  {
+    "query": "GitHub 上有个开源 skill，帮我评估一下能不能接入",
+    "should_trigger": false,
+    "reason": "评估第三方 skill，不是创建新 skill"
+  },
+  {
+    "query": "我想设计一个新的Agent技能体系，先讨论一下思路",
+    "should_trigger": false,
+    "reason": "讨论设计思路而非实际创建——按实际行为而非措辞判断"
+  },
+  {
+    "query": "用 skill-bootstrap 的功能帮我优化现有的 csv-analyzer",
+    "should_trigger": false,
+    "reason": "虽然提到了 skill-bootstrap，但操作对象是已有 skill 的优化"
+  },
+  {
+    "query": "把所有过期的 skill 整理一下准备归档",
+    "should_trigger": false,
+    "reason": "归档已有 skill，不是创建新 skill"
+  },
+  {
+    "query": "帮我看看 skill-hub 里哪些 skill 的 eval 通过率低于 80%",
+    "should_trigger": false,
+    "reason": "统计查询，不是创建新 skill"
+  },
+  {
+    "query": "按照这个模板帮我修改一下 skill 的 description",
+    "should_trigger": false,
+    "reason": "修改已有 skill 的 description，不是创建"
+  },
+  {
+    "query": "帮我搭一个新技能的骨架目录和文件",
+    "should_trigger": true,
+    "reason": "「新技能骨架」——创建意图明确，属于第零步"
+  },
+  {
+    "query": "我要做一个新skill但不太确定应该放哪个域，你帮我分析一下",
+    "should_trigger": true,
+    "reason": "「新skill」+ 需要第零步的域确认"
+  },
+  {
+    "query": "帮我把分析日志的脚本包装成一个可复用的技能给团队用",
+    "should_trigger": false,
+    "reason": "near-miss：提到了「技能」但不是创建新 Skill 的 Agent 技能——可能是飞书技能或 Jenkins 技能。需要追问确认范围"
+  },
+  {
+    "query": "帮我审查一下 requirement-briefing 这个 skill 合不合格，按 Skill Hub 标准逐项检查",
+    "should_trigger": false,
+    "reason": "near-miss：提到了「skill」和「标准」但操作是审查（audit）已有 skill，不是创建新 skill。description 明确排除「对已有 skill 的独立质量审计」"
+  },
+  {
+    "query": "skill-hub 里新建技能的标准流程是什么？我想了解一下",
+    "should_trigger": false,
+    "reason": "near-miss：提到了「新建技能」但只是想了解流程，不是实际操作。按实际行为判断不触发"
+  }
+]

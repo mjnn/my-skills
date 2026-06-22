@@ -1,0 +1,85 @@
+[
+  {
+    "id": 1,
+    "name": "正常流程：从头创建 skill",
+    "prompt": "帮我创建一个新 skill，名字叫 csv-profiler，属于数据分析域。功能是：读取 CSV 文件后自动分析每列的数据类型、空值率、分布特征，输出一份数据画像报告。",
+    "expected_output": "Agent 按 5 步流程引导：第零步确认领域和名称→第一步挖 Gotchas→第二步交替推进正文和 eval（含触发测试和用例同步设计）→第三步自检→第四步格式预检→第五步输出报告。不直接写 SKILL.md 全文，不跳过 Gotchas 步骤。",
+    "assertions": [
+      "Agent 先确认领域和名称，没有跳过第零步",
+      "Agent 要求作者先列出曾踩过的坑（第一步），而非直接开始写正文",
+      "Agent 在引导过程中交替推进正文和 eval，而非分阶段独立完成",
+      "最终输出了包含 5 步完成状态的创建报告"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "HARD-GATE：作者试图跳过 Gotchas",
+    "prompt": "帮我建一个 skill，叫 data-validator。功能我清楚了，就是验证数据质量。你直接帮我写好 SKILL.md 吧，不用一步步来了。",
+    "expected_output": "Agent 拒绝跳过流程。解释 Gotchas 是 skill 最有价值的部分，必须先挖坑再写正文。但可以加快节奏——如果作者已经明确功能，可以缩短第零步但第一步不能跳过。",
+    "assertions": [
+      "Agent 没有直接输出完整的 SKILL.md",
+      "Agent 坚持了至少第一步（Gotchas 提炼）",
+      "Agent 解释了为什么不能跳过 Gotchas",
+      "回复语气不是生硬的拒绝，而是解释原因后提供加速方案"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "description 不够精确时主动纠正",
+    "prompt": "新建一个 skill，叫 config-gen，description 写「Use when user needs to generate config files」。帮我完善。",
+    "expected_output": "Agent 指出 description 太泛，会和很多 skill 冲突。引导作者补充：触发场景的具体关键词（什么类型的 config？什么格式？）、不应触发的边界（手动写配置 vs 自动生成？单文件 vs 批量？）、按复杂度而非措辞判断。",
+    "assertions": [
+      "Agent 指出了原 description 的问题（太泛、会误触发）",
+      "Agent 帮助作者补充了具体触发关键词",
+      "Agent 帮助作者添加了不应触发的边界条件",
+      "修改后的 description 包含「不适用于…」的排除场景"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "eval_queries 中 near-miss 缺失时提醒",
+    "prompt": "我的 skill 的 eval_queries.json 写好了，should-trigger 8 条、should-not-trigger 8 条。你看下。",
+    "expected_output": "Agent 检查后发现 should-not-trigger 中缺少 near-miss——所有不该触发的查询都是完全无关的场景。Agent 指出 near-miss 是试金石，要求补充至少 4 条共享关键词但不该触发的查询。",
+    "assertions": [
+      "Agent 识别出 should-not-trigger 中缺少 near-miss",
+      "Agent 解释了 near-miss 的独特价值（试金石）",
+      "Agent 帮助作者设计了至少 1 条 near-miss 示例"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "edge case：修改已有 skill 不触发",
+    "prompt": "帮我把 requirement-briefing 这个 skill 的 Gotchas 从 7 条扩充到 10 条，最近又踩了三个新坑。",
+    "expected_output": "Agent 识别出这是「修改已有 skill」而非「创建新 skill」，不触发 skill-bootstrap。Agent 直接按修改请求处理——读取现有 SKILL.md，在 Gotchas 章节末尾追加新条目。",
+    "assertions": [
+      "Agent 没有启动 skill-bootstrap 的 5 步流程",
+      "Agent 直接定位到现有 SKILL.md 的 Gotchas 章节",
+      "Agent 追加了新 Gotchas 但没有改动其他章节",
+      "回复中没有任何「第零步」「自检清单」等 skill-bootstrap 特有的流程术语"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "edge case：不可机械判定的 assertion",
+    "prompt": "帮我建一个 skill，叫 meeting-notes。eval 用例我写了一条：assertion 是「输出质量优秀」。你帮我看看这个 assertion 合不合格。",
+    "expected_output": "Agent 指出「输出质量优秀」是不可机械判定的——不同评估者对「优秀」的定义完全不同。引导作者改写为具体、可判定、可量化的 assertion，如「输出包含会议日期、参会人、决议事项三个字段」「每个决议事项有负责人和截止日期」。",
+    "assertions": [
+      "Agent 明确指出「输出质量优秀」不可机械判定",
+      "Agent 解释了为什么不可判定（主观/模糊）",
+      "Agent 给出了至少 2 条可机械判定的改写示例",
+      "Agent 没有直接接受这条 assertion 并继续下一步"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "edge case：格式预检发现 name 不一致",
+    "prompt": "我的 skill 写好了，目录名是 data-cleaner，但 SKILL.md 里 name 写的是 data_cleaner。帮我提交到 hub。",
+    "expected_output": "Agent 在第四步格式预检中发现 name 与目录名不一致（连字符 vs 下划线）。这是一个硬阻断。Agent 拒绝提交，指出差异，要求作者修正后再重新预检。",
+    "assertions": [
+      "Agent 在正式提交前发现了 name 不一致",
+      "Agent 明确指出了差异（目录名 vs frontmatter name）",
+      "Agent 拒绝继续提交——这是硬阻断",
+      "Agent 给出了具体的修正指令（将 name 改为 data-cleaner）"
+    ]
+  }
+]
