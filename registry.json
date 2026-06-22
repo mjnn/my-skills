@@ -1,8 +1,21 @@
 {
   "version": "1.0.0",
-  "updated": "2026-06-22T02:00:00Z",
+  "updated": "2026-06-22T02:20:00Z",
   "description": "马捷个人 Skill 注册表，多平台兼容（HanaAgent / Cursor / 通用）",
-  "skills": [],
+  "skills": [
+    {
+      "name": "skill-publish",
+      "platform": "hana",
+      "description": "将本地高可用 Skill 发布到 mjnn/my-skills 云端仓库",
+      "version": "0.1.0",
+      "path": "skills/skill-publish",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "6 条 eval 用例 + 20 条触发测试（含 5 near-miss）",
+        "securityReviewed": true
+      }
+    }
+  ],
   "_schema": {
     "skillEntry": {
       "name": "string — Skill 名称（小写+连字符）",
