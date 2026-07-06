@@ -26,7 +26,15 @@ description: >-
 4. **公钥未加 GitHub 就宣布成功** — 后续 push 失败。**纠正：等用户确认 Settings 已添加。**
 5. **与 ecs-github-delivery-ops 混淆** — 仅测连接却执行部署。**纠正：commit/push/ECS 转 delivery-ops。**
 
+## 流程
 
+按序执行；失败则查 [reference.md · 故障](reference.md)。
+
+1. **检测 Git** — 刷新 PATH，`git --version`；未安装则经用户同意后 winget 安装
+2. **网络检查** — Test-NetConnection 443/22；HTTPS `git ls-remote` 测公开库
+3. **SSH 配置**（如需）— 生成/确认 `id_ed25519_github` → 写入 config → 用户添加公钥到 GitHub Settings
+4. **SSH 认证验证** — `ssh -T`（exit 1 但含 `Hi username` 仍算 pass）
+5. **任务结束回报** — 输出标准摘要；若用户要 push/部署则转 **ecs-github-delivery-ops**
 
 ## 全局约束
 

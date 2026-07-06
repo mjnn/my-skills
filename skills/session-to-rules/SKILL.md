@@ -71,15 +71,15 @@ git rev-parse --show-toplevel
 | 跨 skills 通用原则批量维护 | `ecc-rules-distill` |
 | 用户仍要保留的实验脚本 | 不删；可移入 `scripts/` 或标注为正式工具 |
 
-
 ## Gotchas
 
 1. **写入用户全局 rules** — 污染所有项目。**纠正：仅 {PROJECT_ROOT}/.cursor/rules/。**
-2. **未展示提案就写入** — 用户未批准。**纠正：Step 4 提案含完整绝对路径，等确认。**
+2. **未展示提案就写入** — 用户未批准。**纠正：Step 4 提案含完整绝对路径，用 AskUserQuestion 等确认。**
 3. **删除无 rule 承接的调试脚本** — 知识丢失。**纠正：每条删除对应 rule 或正式代码。**
 4. **与 skill-bootstrap 混淆** — 用户要建 Skill 却沉淀 rules。**纠正：新 Skill 走 skill-bootstrap。**
 5. **git clean -fdx 批量清理** — 误删生产数据。**纠正：Never 批量 clean，逐条提案。**
-## Workflow
+
+## 流程
 
 ```
 Task Progress:
@@ -175,6 +175,15 @@ mkdir -p "{PROJECT_ROOT}/.cursor/rules"
 ### Step 4: 向用户展示合并提案（必须）
 
 **未经用户确认，不得写入 rules，不得删除任何文件。**
+
+使用 AskUserQuestion 收集确认（禁止纯文本「请回复批准全部」）：
+
+调用 AskUserQuestion（2 个问题）：
+
+| 问题 | header | 选项 |
+|------|--------|------|
+| Rules 提案是否批准？ | Rules | 批准全部（推荐）/ 批准部分 / 跳过全部 |
+| Cleanup 提案是否批准？ | Cleanup | 批准全部 / 批准部分 / 跳过全部 / 跳过 cleanup |
 
 ```markdown
 # Session → Rules + Cleanup 提案

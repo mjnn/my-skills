@@ -26,7 +26,15 @@ description: >-
 4. **与 ecs-github-delivery-ops 混淆** — 用户要部署却只做连接。**纠正：部署/镜像/Nginx 转 delivery-ops。**
 5. **未 IdentitiesOnly 导致错密钥** — Permission denied。**纠正：config 中 IdentitiesOnly yes + 正确 IdentityFile。**
 
+## 流程
 
+按序执行，任一步失败则查 [reference.md](reference.md) 故障表，**不要**假设已连上。
+
+1. **确认参数** — 核对 SSH 别名、主机 IP、用户、密钥路径（见默认连接参数；缺则使用 AskUserQuestion 确认）
+2. **首次配置**（如需）— 放置私钥 → icacls 权限 → 写入 `~/.ssh/config` → 校验公钥 → 确认密钥已绑定实例
+3. **连通性检查**（必做）— `ssh BatchMode echo ok` → `hostname` → 可选只读巡检（docker ps / /srv/apps / nginx -t）
+4. **只读操作** — 按用户请求执行 docker logs、ss、df 等，禁止改生产配置
+5. **任务结束回报** — 输出标准摘要；若用户要部署则转 **ecs-github-delivery-ops**
 
 ## 全局约束
 
