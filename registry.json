@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated": "2026-07-06T03:40:00Z",
+  "updated": "2026-07-06T03:48:00Z",
   "description": "马捷个人 Skill 注册表，多平台兼容（HanaAgent / Cursor / 通用）",
   "skills": [
     {
@@ -72,6 +72,18 @@
       "quality": {
         "gated": true,
         "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 4 near-miss）",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "ask-before-act",
+      "platform": "cursor",
+      "description": "Agent 意图不确定时使用 AskUserQuestion 结构化澄清，确认后再执行（含 EnterSpecMode 衔接）",
+      "version": "0.1.0",
+      "path": "skills/ask-before-act",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "7 条 eval 用例 + 20 条触发测试（含 4 near-miss）",
         "securityReviewed": true
       }
     }

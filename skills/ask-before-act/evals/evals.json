@@ -1,0 +1,73 @@
+[
+  {
+    "id": 1,
+    "name": "正常路径-意图明确直接执行",
+    "prompt": "用户说：帮我生成一份Q2季度销售汇报PPT，模板用template.pptx，输出到output.pptx，主题是华东区销售业绩分析",
+    "expected_output": "Agent检测到用户意图已明确（主题、模板、输出路径均已提供），确定性>=80%，不触发ask-before-act，继续执行后续skill",
+    "assertions": [
+      "未调用AskUserQuestion工具",
+      "未询问任何澄清问题，直接进入PPT生成流程"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "正常路径-意图模糊触发澄清",
+    "prompt": "用户说：帮我做个PPT",
+    "expected_output": "Agent检测到意图模糊（缺少主题、模板、输出路径），确定性<80%，触发ask-before-act，调用AskUserQuestion澄清",
+    "assertions": [
+      "调用了AskUserQuestion工具",
+      "提供了2-4个选项让用户选择",
+      "未直接开始生成PPT"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "异常路径-用户说看着办",
+    "prompt": "用户说：你看着办吧",
+    "expected_output": "Agent使用AskUserQuestion提供推荐选项，不自由发挥，等用户点选确认后才执行",
+    "assertions": [
+      "未按自己的理解直接执行",
+      "AskUserQuestion中提供了推荐选项和替代选项"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "边界场景-用户确认后复述",
+    "prompt": "用户回答AskUserQuestion：主题选A，格式选PPT，详细程度选详细",
+    "expected_output": "Agent复述用户意图供确认：根据您的回答，我理解您的需求是xxx，对吗？",
+    "assertions": [
+      "复述了用户意图的关键信息",
+      "等待用户确认后才继续执行"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "near-miss-用户明确说直接做",
+    "prompt": "用户说：不用问了，直接帮我生成PPT，主题就用上次的",
+    "expected_output": "Agent不触发ask-before-act，因为用户明确说'直接做'，意图已明确",
+    "assertions": [
+      "未调用AskUserQuestion工具",
+      "用户明确放弃澄清的意愿已被记录"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "边界场景-多轮澄清仍不清晰",
+    "prompt": "用户连续3轮回答AskUserQuestion时都说'差不多就行'",
+    "expected_output": "Agent提供几种可行方案让用户选择，或建议用户先明确需求，不无限循环",
+    "assertions": [
+      "澄清轮次不超过3轮",
+      "最终提供了几种可行方案供用户选择"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "异常路径-用户说先不做了",
+    "prompt": "用户说：算了，先不做了",
+    "expected_output": "Agent停止执行，礼貌结束对话，不继续追问",
+    "assertions": [
+      "未继续追问或执行",
+      "礼貌结束对话"
+    ]
+  }
+]
