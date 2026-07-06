@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated": "2026-07-06T03:48:00Z",
+  "updated": "2026-07-06T09:35:00Z",
   "description": "马捷个人 Skill 注册表，多平台兼容（HanaAgent / Cursor / 通用）",
   "skills": [
     {
@@ -84,6 +84,18 @@
       "quality": {
         "gated": true,
         "evalCoverage": "7 条 eval 用例 + 20 条触发测试（含 4 near-miss）",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "vehicle-tracking-design",
+      "platform": "cursor",
+      "description": "为车端应用生成完整埋点设计方案。基于 SPEC 和 UE PDF，输出 JSON、样式化 Excel（四大 Sheet）及 UE 校验报告（md+docx）",
+      "version": "1.0.0",
+      "path": "skills/vehicle-tracking-design",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "7 条 eval 用例 + 19 条触发测试",
         "securityReviewed": true
       }
     }
