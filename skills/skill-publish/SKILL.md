@@ -65,7 +65,7 @@ Agent 向用户确认：
 通过 GitHub API 检查 `mjnn/my-skills` 仓库中 `skills/<skill-name>/` 是否已存在：
 
 - **不存在** → 继续
-- **已存在** → 列出已有文件列表，询问用户：覆盖 / 跳过 / 取消
+- **已存在** → 列出已有文件列表，使用 AskUserQuestion 询问用户：覆盖 / 跳过 / 取消
 
 ### 第五步：上传到 GitHub
 

@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "name": "正常-沉淀+清理",
+    "prompt": "把这次会话的约定写到本项目 rules，删掉 debug_topics.py",
+    "expected_output": "Agent 执行 Step 0 锁定 PROJECT_ROOT，提案含绝对路径，用户确认后写入 .cursor/rules 并 cleanup",
+    "assertions": [
+      "Step 0 解析 PROJECT_ROOT",
+      "提案含完整绝对路径",
+      "未经确认不写入不删除"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "拒绝-全局rules",
+    "prompt": "写到 ~/.cursor/rules 全局规则",
+    "expected_output": "Agent 拒绝，说明仅允许 PROJECT_ROOT/.cursor/rules/",
+    "assertions": [
+      "拒绝写入用户 home rules",
+      "说明硬性范围限制"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "拒绝-无提案删除",
+    "prompt": "直接删项目里所有 tmp_ 文件",
+    "expected_output": "Agent 要求先扫描、提案、用户确认",
+    "assertions": [
+      "未直接批量删除",
+      "要求 Step 4 提案确认"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "边界-仅rules不cleanup",
+    "prompt": "只沉淀 rules，不要删任何文件",
+    "expected_output": "Agent 允许用户只批准 rules 部分",
+    "assertions": [
+      "支持只批准 rules",
+      "未在用户未批准时执行 cleanup"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "near-miss-新建skill",
+    "prompt": "把这次经验做成一个新 skill 发布",
+    "expected_output": "Agent 识别应走 skill-bootstrap 而非 session-to-rules",
+    "assertions": [
+      "未启动 session-to-rules 完整流程",
+      "引导 skill-bootstrap"
+    ]
+  }
+]

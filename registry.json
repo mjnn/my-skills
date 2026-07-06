@@ -1,13 +1,25 @@
 {
   "version": "1.0.0",
-  "updated": "2026-06-22T05:15:00Z",
+  "updated": "2026-07-06T03:34:48Z",
   "description": "马捷个人 Skill 注册表，多平台兼容（HanaAgent / Cursor / 通用）",
   "skills": [
     {
+      "name": "skill-bootstrap",
+      "platform": "cursor",
+      "description": "从零创建 Agent Skill 的质量引导与门禁检查，5 步流程含 AskUserQuestion/Spec 模式规范与 GitLab 发布流程",
+      "version": "0.2.0",
+      "path": "skills/skill-bootstrap",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 4 near-miss）",
+        "securityReviewed": true
+      }
+    },
+    {
       "name": "skill-publish",
-      "platform": "hana",
+      "platform": "cursor",
       "description": "将本地高可用 Skill 发布到 mjnn/my-skills 云端仓库",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "path": "skills/skill-publish",
       "quality": {
         "gated": true,
@@ -16,14 +28,50 @@
       }
     },
     {
-      "name": "skill-bootstrap",
-      "platform": "hana",
-      "description": "新建技能时的质量引导与门禁检查，5 步流程 7 门禁标准",
+      "name": "ecs-connect",
+      "platform": "cursor",
+      "description": "阿里云 ECS SSH 连通、密钥配置与只读巡检（KeyForAgent / ecs-main）",
       "version": "0.1.0",
-      "path": "skills/skill-bootstrap",
+      "path": "skills/ecs-connect",
       "quality": {
         "gated": true,
-        "evalCoverage": "7 条 eval 用例 + 22 条触发测试（含 3 near-miss）",
+        "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 6 near-miss）",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "github-connect",
+      "platform": "cursor",
+      "description": "Windows 下 GitHub 连通性验证与 SSH/HTTPS 认证配置",
+      "version": "0.1.0",
+      "path": "skills/github-connect",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 5 near-miss）",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "ecs-github-delivery-ops",
+      "platform": "cursor",
+      "description": "ECS Docker Compose 部署、Nginx 反向代理、ACR 镜像推送与 GitHub 交付",
+      "version": "0.1.0",
+      "path": "skills/ecs-github-delivery-ops",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 4 near-miss）",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "session-to-rules",
+      "platform": "cursor",
+      "description": "将当前项目会话沉淀为 .cursor/rules 并清理本仓库临时产物",
+      "version": "0.1.0",
+      "path": "skills/session-to-rules",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 4 near-miss）",
         "securityReviewed": true
       }
     }

@@ -1,0 +1,82 @@
+[
+  {
+    "query": "沉淀会话到本项目 rules",
+    "should_trigger": true,
+    "reason": "核心触发"
+  },
+  {
+    "query": "capture session to project rules",
+    "should_trigger": true,
+    "reason": "英文触发"
+  },
+  {
+    "query": "清理临时文件并写 rules",
+    "should_trigger": true,
+    "reason": "rules+cleanup"
+  },
+  {
+    "query": "distill and cleanup 这个 repo",
+    "should_trigger": true,
+    "reason": "distill 关键词"
+  },
+  {
+    "query": "项目规则沉淀",
+    "should_trigger": true,
+    "reason": "中文触发"
+  },
+  {
+    "query": "写到 .cursor/rules",
+    "should_trigger": true,
+    "reason": "路径触发"
+  },
+  {
+    "query": "删除 debug 脚本知识进 rules",
+    "should_trigger": true,
+    "reason": "cleanup+rules"
+  },
+  {
+    "query": "会话结束保存约定",
+    "should_trigger": true,
+    "reason": "会话沉淀"
+  },
+  {
+    "query": "写到 ~/.cursor/rules 全局",
+    "should_trigger": false,
+    "reason": "near-miss：rules 但是全局"
+  },
+  {
+    "query": "新建一个 agent skill",
+    "should_trigger": false,
+    "reason": "near-miss：沉淀但对象是 skill"
+  },
+  {
+    "query": "修改 requirement-briefing skill",
+    "should_trigger": false,
+    "reason": "near-miss：含 skill 但是修改已有 skill 非 session 沉淀"
+  },
+  {
+    "query": "ecc-save-session 保存 WIP",
+    "should_trigger": false,
+    "reason": "save-session 非 rules"
+  },
+  {
+    "query": "讨论 rules 设计思路",
+    "should_trigger": false,
+    "reason": "near-miss：rules 但只讨论"
+  },
+  {
+    "query": "删除 D:/temp 目录",
+    "should_trigger": false,
+    "reason": "workspace 外路径"
+  },
+  {
+    "query": "评估 skill 质量",
+    "should_trigger": false,
+    "reason": "无关审计"
+  },
+  {
+    "query": "git commit",
+    "should_trigger": false,
+    "reason": "无关"
+  }
+]
