@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated": "2026-07-06T09:35:00Z",
+  "updated": "2026-07-07T11:10:00Z",
   "description": "马捷个人 Skill 注册表，多平台兼容（HanaAgent / Cursor / 通用）",
   "skills": [
     {
@@ -96,6 +96,18 @@
       "quality": {
         "gated": true,
         "evalCoverage": "7 条 eval 用例 + 19 条触发测试",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "feishu-bitable-ops",
+      "platform": "cursor",
+      "description": "飞书多维表格 Bitable API：CRUD、新建授权、他人表协作者、VIN 过筛",
+      "version": "1.0.0",
+      "path": "skills/feishu-bitable-ops",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "7 条 eval 用例 + 20 条触发测试（含 5 near-miss）",
         "securityReviewed": true
       }
     }
