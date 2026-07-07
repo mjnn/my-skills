@@ -1,6 +1,6 @@
 {
   "skill": "feishu-bitable-ops",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "evals": [
     {
       "id": "eval-001",
@@ -70,6 +70,17 @@
       "assertions": [
         "识别为不适用范围（即时消息）",
         "不执行 bitable 写操作作为替代"
+      ]
+    },
+    {
+      "id": "eval-008",
+      "prompt": "我第一次用这个飞书多维表格技能，还没配置过，帮我初始化。",
+      "expected_output": "Agent 走阶段 0：读 app-setup.md；引导 open.feishu.cn 建应用、开权限、发布安装；AskUserQuestion 确认应用状态与凭证提供方式；指导写 .env（Secret 不进对话）；运行 auth 验证通过后再继续。",
+      "assertions": [
+        "提及飞书开放平台创建企业自建应用",
+        "要求 App ID 和 App Secret 配置到 .env",
+        "App Secret 不在对话中回显或要求用户聊天粘贴",
+        "auth 验证通过前不调用 list-records 等业务 API"
       ]
     }
   ]

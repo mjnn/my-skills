@@ -102,12 +102,12 @@
     {
       "name": "feishu-bitable-ops",
       "platform": "cursor",
-      "description": "飞书多维表格 Bitable API：CRUD、新建授权、他人表协作者、VIN 过筛",
-      "version": "1.0.0",
+      "description": "飞书多维表格 Bitable API：初始化配置 App ID/Secret、CRUD、新建授权、他人表协作者、VIN 过筛",
+      "version": "1.0.1",
       "path": "skills/feishu-bitable-ops",
       "quality": {
         "gated": true,
-        "evalCoverage": "7 条 eval 用例 + 20 条触发测试（含 5 near-miss）",
+        "evalCoverage": "8 条 eval 用例 + 21 条触发测试（含 5 near-miss）",
         "securityReviewed": true
       }
     }

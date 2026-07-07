@@ -1,10 +1,10 @@
 ---
 name: feishu-bitable-ops
 description: >-
-  飞书开放平台多维表格 (Bitable) API 操作：凭证、URL 解析、记录/表/字段 CRUD、附件上传下载、
+  飞书开放平台多维表格 (Bitable) API 操作：首次初始化引导配置开放平台 App ID/Secret、
   新建 Base 后自动授予用户可管理权限、操作他人表格的协作者配置、用户车 VIN 过筛。
   Use when the user mentions 飞书、Feishu、Lark、多维表格、Bitable、base URL、添加文档应用、
-  grant-access、VIN 过筛、埋点导出需求收集表。
+  grant-access、VIN 过筛、埋点导出需求收集表、配置飞书应用、App ID。
   不适用于：飞书即时消息/日历/审批、仅浏览器手工填表（无 API）、Lark 国际版未配置开放平台、
   纯 Excel 本地处理不碰飞书、飞书文档 Docx 正文编辑（非 Bitable）。
 ---
@@ -18,7 +18,8 @@ description: >-
 2. 应用身份 **新建** 多维表格后，交付 URL 前必须 `ensure_user_full_access` 且 `permission.verified=true`。
 3. 操作 **他人创建** 的表：仅给链接不够，必须确认应用已加为「文档应用」协作者（见 references/access-others-tables.md）。
 4. Secret 只放 `.env`，禁止提交、禁止在对话粘贴完整 token。
-5. 向用户收集任务类型或权限不明时，必须用 AskUserQuestion，禁止纯文本罗列选项。
+5. 向用户收集任务类型、凭证状态或权限不明时，必须用 AskUserQuestion，禁止纯文本罗列选项。
+6. **首次使用 / `auth` 失败 / 无 `.env`**：必须先完成阶段 0 初始化（引导创建开放平台应用并配置 App ID、Secret），验证 `auth` 通过后才能执行业务 API。
 </HARD-GATE>
 
 ## Gotchas
@@ -39,18 +40,58 @@ description: >-
 
 8. **控制台中文乱码** — PowerShell 直接 print 中文记录。**纠正：`PYTHONIOENCODING=utf-8` 或写入 UTF-8 JSON 再 Read。**
 
+9. **跳过开放平台初始化** — 用户未建应用、未给 App ID/Secret 就直接 `list-records`。**纠正：先走阶段 0 引导建应用、写 `.env`、`auth` 通过后再继续。**
+
 ## 流程
 
-### 阶段 0：定位工具与凭证
+### 阶段 0：初始化（首次使用必做）
 
-脚本路径（按优先级）：
+<HARD-GATE>
+在 `scripts/.env`（或工作区 `工具/feishu_bitable/.env`）配置完成且 `feishu_bitable.py auth` 返回 `ok: true` 之前，**禁止**调用任何 Bitable 业务 API。
+</HARD-GATE>
 
-1. 工作区 `工具/feishu_bitable/feishu_bitable.py`（BI_Dashboard 等项目）
+**0.1 定位脚本**
+
+1. 工作区 `工具/feishu_bitable/feishu_bitable.py`（BI_Dashboard 等）
 2. 本 skill `scripts/feishu_bitable.py`
 
-凭证：`scripts/.env.example` → 复制为同目录 `.env`，填写 `FEISHU_APP_ID`、`FEISHU_APP_SECRET`；推荐配置 `FEISHU_OWNER_OPEN_ID` 或 `FEISHU_OWNER_EMAIL`。
+**0.2 检查是否已有凭证**
 
-验证：
+检查同目录是否存在 `.env` 且含非空的 `FEISHU_APP_ID`、`FEISHU_APP_SECRET`。若无或 `auth` 失败 → 进入 **0.3**。
+
+**0.3 引导用户配置飞书开放平台应用**
+
+必读 [references/app-setup.md](references/app-setup.md)，并用自然语言带用户完成：
+
+1. 打开 https://open.feishu.cn/app → **创建企业自建应用**
+2. **权限管理** 开通 `bitable:app`；若需新建表授权则再加 `docs:permission.member:create`、`docs:permission.member:transfer`
+3. **发布版本并安装到企业**
+4. 在 **凭证与基础信息** 复制 **App ID**、**App Secret**
+
+调用 AskUserQuestion（2 个问题）：
+
+| 问题 | header | 选项 |
+|------|--------|------|
+| 飞书开放平台应用是否已创建并安装到企业？ | 应用状态 | 已完成（推荐）/ 还没有，需要引导创建 / 已创建但未安装 |
+| 你希望如何提供凭证？ | 凭证方式 | 我稍后自行写入 .env（推荐）/ 现在提供 App ID（对话中可提供）/ 不确定 App ID 在哪 |
+
+**收集规则：**
+
+- **App ID**（`cli_` 开头）：用户可在对话中提供
+- **App Secret**：**禁止在对话中粘贴**；指示用户自行写入 `.env`，或 Agent 在用户确认路径后**仅写入文件、不在回复中回显**
+- **飞书邮箱**（推荐）：写入 `FEISHU_OWNER_EMAIL`，用于新建表后自动授权
+
+**0.4 写入 `.env`**
+
+```env
+FEISHU_APP_ID=cli_xxxxxxxx
+FEISHU_APP_SECRET=xxxxxxxx
+FEISHU_OWNER_EMAIL=you@company.com
+```
+
+从 `scripts/.env.example` 复制生成；`.env` 已 gitignore，勿提交。
+
+**0.5 验证**
 
 ```powershell
 $env:NO_PROXY='*'
@@ -58,7 +99,8 @@ $env:PYTHONIOENCODING='utf-8'
 python <path>/feishu_bitable.py auth
 ```
 
-开放平台应用权限：至少 `bitable:app`；新建+授权还需 `docs:permission.member:create`、`docs:permission.member:transfer`（或 `drive:drive`）。**发布版本并安装到企业。**
+- 成功 → 进入阶段 1
+- 失败 → 对照 app-setup.md 排查（权限未发布、Secret 错误、NO_PROXY）
 
 ### 阶段 1：确认任务类型
 
@@ -165,6 +207,7 @@ records = client.list_records(ids["app_token"], ids["table_id"])
 
 ## references
 
+- `references/app-setup.md`：飞书开放平台建应用、开权限、配置 App ID/Secret（**阶段 0 必读**）
 - `references/cli-commands.md`：CLI 子命令与字段 type 码（阶段 3、5 读取）
 - `references/post-create-permissions.md`：新建表后 `ensure_user_full_access`（阶段 4 必读）
 - `references/access-others-tables.md`：他人表格 / 链接分享 vs API 协作者（阶段 1、2 读取）

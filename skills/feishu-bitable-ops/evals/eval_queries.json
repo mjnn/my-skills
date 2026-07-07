@@ -97,9 +97,9 @@
       "reason": "near-miss：审批非 Bitable"
     },
     {
-      "query": "batch-create 一次最多多少条记录",
+      "query": "第一次用飞书多维表格技能，怎么配置 App ID 和 Secret",
       "should_trigger": true,
-      "reason": "near-miss：Bitable API 批量写入细节"
+      "reason": "技能初始化 / 开放平台凭证"
     }
   ]
 }
