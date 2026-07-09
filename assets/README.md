@@ -1,13 +1,13 @@
 # Release assets
 
-单 skill 离线安装包，命名：`<skill-name>-v<semver>.zip`。
+单 skill 离线安装包：`<skill-name>-v<semver>.zip`
 
-大体积运行时（`skill-kit` 的 Python/MinGit、`skill-env-setup` 初始化包）**仅**在此目录提供 zip，不进入 `skills/` 源码树，避免 Git 膨胀。
+大体积运行时（便携 Python、MinGit 等）仅在此目录以 zip 分发，不进入 `skills/` 源码树。
 
-安装示例（Qoder CN）：
+解压到本机 **skill 安装根目录**（由 Agent 环境决定，例如项目 `.cursor/skills/` 或用户 `~/.qoder-cn/skills/`）：
 
 ```powershell
-Expand-Archive assets\skill-env-setup-v0.5.0.zip -DestinationPath $env:USERPROFILE\.qoder-cn\skills\
+Expand-Archive assets\<skill>-vX.Y.Z.zip -DestinationPath <skill-root>\
 ```
 
-Cursor 用户推荐直接克隆或 sparse-checkout `skills/<域>/<skill-name>/`。
+或 sparse-checkout 源码：`skills/<域>/<skill-name>/`

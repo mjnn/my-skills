@@ -18,22 +18,18 @@ jobs:
       - name: 生成 Skill 索引并更新 README
         run: |
           set -e
-          TABLE="| Skill | 域 | 平台 | 说明 |"
-          TABLE="${TABLE}\n|-------|-----|------|------|"
+          TABLE="| Skill | 域 | 说明 |"
+          TABLE="${TABLE}\n|-------|-----|------|"
 
           jq -c '.skills[]' registry.json | while read -r entry; do
             NAME=$(echo "$entry" | jq -r '.name')
             DOMAIN=$(echo "$entry" | jq -r '.domain')
             PATH_REL=$(echo "$entry" | jq -r '.path')
-            PLATFORM=$(echo "$entry" | jq -r '.platform')
-            [ "$PLATFORM" = "hana" ] && PLATFORM="HanaAgent"
-            [ "$PLATFORM" = "cursor" ] && PLATFORM="Cursor"
-            [ "$PLATFORM" = "universal" ] && PLATFORM="通用"
             SKILL_MD="${PATH_REL}/SKILL.md"
             if [ -f "$SKILL_MD" ]; then
               DESC=$(sed -n '/^---$/,/^---$/p' "$SKILL_MD" | grep '^description:' | head -1 | sed 's/^description: *//' | tr -d '\r')
               DESC=$(echo "$DESC" | sed 's/\.[^.]*$/./')
-              TABLE="${TABLE}\n| [${NAME}](${PATH_REL}) | ${DOMAIN} | ${PLATFORM} | ${DESC} |"
+              TABLE="${TABLE}\n| [${NAME}](${PATH_REL}) | ${DOMAIN} | ${DESC} |"
             fi
           done
 

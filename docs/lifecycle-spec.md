@@ -153,7 +153,7 @@ CI 自动判定的默认规则（人工在 merge 时确认）：
 
 ### 格式门禁 frontmatter 白名单
 
-门禁 2 的"非标准字段"规则有一个白名单。以下 HanaAgent 平台必需字段允许留在 frontmatter：
+门禁 2 的"非标准字段"规则有一个白名单。以下 Agent 运行时常见字段允许留在 frontmatter：
 - `default-enabled` -- Agent 加载控制
 - `compatibility` -- 平台兼容性声明
 

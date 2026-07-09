@@ -29,7 +29,7 @@ Agent 在执行 skill 发布时会反复犯以下错误：
 ### 第一步：确认发布目标
 
 Agent 向用户确认：
-1. **Skill 本地路径**：位于 `~/.hanako/skills/<skill-name>/` 或用户指定的路径
+1. **Skill 本地路径**：用户 skill 目录下的 `<skill-name>/`（如项目 `.cursor/skills/`、`.qoder-cn/skills/`）或用户指定路径
 2. **版本号**：语义化版本（如 `v1.0.0`），如果 SKILL.md 未标注则询问用户
 
 如果用户只说"发布这个 skill"但没给路径，Agent 应根据当前上下文推断（如刚创建的 skill、刚修改的 skill），推断不出则询问。
@@ -62,7 +62,7 @@ Agent 向用户确认：
 
 ### 第四步：检查远程冲突
 
-通过 GitHub API 检查 `mjnn/my-skills` 仓库中 `skills/<skill-name>/` 是否已存在：
+通过 GitHub API 检查 `mjnn/my-skills` 仓库中 `skills/<域>/<skill-name>/` 是否已存在：
 
 - **不存在** → 继续
 - **已存在** → 列出已有文件列表，使用 AskUserQuestion 询问用户：覆盖 / 跳过 / 取消
@@ -75,7 +75,7 @@ Agent 向用户确认：
 owner: mjnn
 repo: my-skills
 branch: main
-路径前缀: skills/<skill-name>/
+路径前缀: skills/<domain>/<skill-name>/
 ```
 
 commit message 格式：
@@ -99,10 +99,10 @@ publish: feishu-bitable-setup v1.0.0 — 飞书多维表格快速搭建
 ```json
 {
   "name": "<skill-name>",
-  "platform": "<hana | cursor | universal>",
+  "domain": "<platform-engineering | general-office | ...>",
   "description": "<从 SKILL.md description 提取>",
   "version": "<version>",
-  "path": "skills/<skill-name>",
+  "path": "skills/<domain>/<skill-name>",
   "quality": {
     "gated": true,
     "evalCoverage": "<eval 用例数 + 触发测试数>",
@@ -121,10 +121,10 @@ registry: add/update <skill-name> v<version>
 ```
 ✅ 发布完成：<skill-name> v<version>
 
-平台：<hana | cursor | universal>
+域：<domain>
 上传文件：N 个
-Registry：已更新
-GitHub：https://github.com/mjnn/my-skills/tree/main/skills/<skill-name>
+Registry / CATALOG：已更新
+GitHub：https://github.com/mjnn/my-skills/tree/main/skills/<domain>/<skill-name>
 ```
 
 ## 异常处理
