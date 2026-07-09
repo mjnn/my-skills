@@ -1,0 +1,92 @@
+[
+  {
+    "query": "帮我做个系统，先走流程",
+    "should_trigger": true,
+    "reason": "明确需要走流程，触发 skill-discipline"
+  },
+  {
+    "query": "开始新任务之前检查一下有什么 skill 适用",
+    "should_trigger": true,
+    "reason": "明确要求检查 skill 适用性"
+  },
+  {
+    "query": "这个任务怎么做好，先用 skill 看看",
+    "should_trigger": true,
+    "reason": "提到用 skill 检查"
+  },
+  {
+    "query": "我应该先调用哪个 skill？",
+    "should_trigger": true,
+    "reason": "询问 skill 适用性"
+  },
+  {
+    "query": "先过一下 skill 检查再动手",
+    "should_trigger": true,
+    "reason": "明确要求先过 skill 检查"
+  },
+  {
+    "query": "这个项目有什么 skill 可以用？",
+    "should_trigger": true,
+    "reason": "询问可用 skill"
+  },
+  {
+    "query": "按流程来，先梳理需求",
+    "should_trigger": true,
+    "reason": "提到按流程来"
+  },
+  {
+    "query": "我想跳过流程直接做",
+    "should_trigger": true,
+    "reason": "提到跳过流程，触发防跳过机制"
+  },
+  {
+    "query": "直接做吧，不用管 skill",
+    "should_trigger": false,
+    "reason": "用户明确要求跳过 skill"
+  },
+  {
+    "query": "你好",
+    "should_trigger": false,
+    "reason": "纯寒暄"
+  },
+  {
+    "query": "现在几点了？",
+    "should_trigger": false,
+    "reason": "系统查询"
+  },
+  {
+    "query": "帮我查一下明天的天气",
+    "should_trigger": false,
+    "reason": "外部信息查询"
+  },
+  {
+    "query": "告诉我 JavaScript 中 async/await 的用法",
+    "should_trigger": false,
+    "reason": "纯知识问答"
+  },
+  {
+    "query": "讲个笑话",
+    "should_trigger": false,
+    "reason": "纯娱乐"
+  },
+  {
+    "query": "帮我优化一下这段代码的性能",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『代码』但属于已有代码优化，不是新任务启动"
+  },
+  {
+    "query": "这个 bug 修一下",
+    "should_trigger": false,
+    "reason": "near-miss：提到了任务但属于修复已有问题，不是新任务启动"
+  },
+  {
+    "query": "帮我解释一下这个项目的设计思路",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『项目』但属于理解而非执行，不触发流程检查"
+  },
+  {
+    "query": "把这段代码翻译成 Python",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『代码』但属于翻译转换任务，流程简单"
+  }
+]

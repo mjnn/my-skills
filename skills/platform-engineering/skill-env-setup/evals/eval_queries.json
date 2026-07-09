@@ -1,0 +1,102 @@
+[
+  {
+    "query": "帮我配置 Qoder Skills 环境",
+    "should_trigger": true,
+    "reason": "明确请求配置 Qoder Skills 环境，应触发环境初始化"
+  },
+  {
+    "query": "第一次用 Qoder CN，怎么安装 skill？",
+    "should_trigger": true,
+    "reason": "首次使用 Qoder CN 且需要安装 skill，应触发环境初始化"
+  },
+  {
+    "query": "我的电脑上没有 Git，能帮我搭建 skill 环境吗？",
+    "should_trigger": true,
+    "reason": "缺少 Git 且需要搭建 skill 环境，应触发环境初始化"
+  },
+  {
+    "query": "初始化一下 Qoder 技能环境",
+    "should_trigger": true,
+    "reason": "明确要求初始化技能环境，应触发"
+  },
+  {
+    "query": "我刚装了 Qoder CN 企业版，帮我配置 skill",
+    "should_trigger": true,
+    "reason": "新安装 Qoder CN 企业版后需要配置 skill，应触发"
+  },
+  {
+    "query": "帮我设置 skill 目录和拉取基础 skill",
+    "should_trigger": true,
+    "reason": "需要创建 skill 目录并拉取 skill，应触发"
+  },
+  {
+    "query": "Qoder Skills 环境搭建",
+    "should_trigger": true,
+    "reason": "简短但明确的搭建请求，应触发"
+  },
+  {
+    "query": "从零开始配置 Qoder Skills",
+    "should_trigger": true,
+    "reason": "明确从零开始配置，应触发"
+  },
+  {
+    "query": "帮我检测一下 Qoder skill 环境是否就绪",
+    "should_trigger": true,
+    "reason": "要求检测环境是否就绪，属于环境初始化的前置检查阶段"
+  },
+  {
+    "query": "我想开始用 Qoder skill，需要准备什么环境？",
+    "should_trigger": true,
+    "reason": "询问环境准备需求，应触发环境初始化流程"
+  },
+  {
+    "query": "帮我创建一个新的 Agent Skill",
+    "should_trigger": false,
+    "reason": "应触发 skill-bootstrap（创建新 skill），不是环境初始化"
+  },
+  {
+    "query": "更新 skill-bootstrap 到新版本",
+    "should_trigger": false,
+    "reason": "应触发 skill-update（更新已有 skill），不是环境初始化"
+  },
+  {
+    "query": "现在几点了",
+    "should_trigger": false,
+    "reason": "纯信息查询，与 Qoder Skills 环境无关"
+  },
+  {
+    "query": "帮我上传项目到 GitLab",
+    "should_trigger": false,
+    "reason": "应触发 gitlab-repo-upload（上传项目），不是环境初始化"
+  },
+  {
+    "query": "帮我安装一个 skill-bootstrap",
+    "should_trigger": false,
+    "reason": "near-miss：只安装单个已存在的 skill，不是环境初始化。应引导用户手动下载或走 skill-bootstrap 流程"
+  },
+  {
+    "query": "Qoder CN 怎么用",
+    "should_trigger": false,
+    "reason": "near-miss：提到 Qoder CN 但问的是通用使用方法，不是环境配置"
+  },
+  {
+    "query": "帮我配置 Git 环境",
+    "should_trigger": false,
+    "reason": "near-miss：提到配置环境但仅限 Git，不是 Qoder Skills 环境初始化"
+  },
+  {
+    "query": "skill 目录在哪里",
+    "should_trigger": false,
+    "reason": "near-miss：仅查询路径信息，不需要完整环境初始化流程"
+  },
+  {
+    "query": "帮我拉取 skill-update 的最新版本",
+    "should_trigger": false,
+    "reason": "near-miss：拉取特定 skill 的更新，不是环境初始化"
+  },
+  {
+    "query": "我的 skill 环境好了，帮我写个代码",
+    "should_trigger": false,
+    "reason": "near-miss：提到 skill 环境但意图是写代码，不是环境配置"
+  }
+]

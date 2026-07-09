@@ -1,0 +1,102 @@
+[
+  {
+    "query": "帮我生成一个项目汇报PPT，模板在 template.pptx，主题是智能座舱系统开发进度",
+    "should_trigger": true,
+    "reason": "用户明确要求生成结构化汇报PPT，并提供了模板文件，完全符合触发条件"
+  },
+  {
+    "query": "用这份模板做个进度汇报的演示文稿",
+    "should_trigger": true,
+    "reason": "用户要求生成汇报演示文稿，并提到模板，属于典型触发场景"
+  },
+  {
+    "query": "按照总分总的结构，用模板生成一份PPT",
+    "should_trigger": true,
+    "reason": "用户明确要求总分总结构化叙事，且提到模板，符合触发条件"
+  },
+  {
+    "query": "做个PPT，要有封面、目录、总览、背景、详情、分析、计划、总结这几个部分",
+    "should_trigger": true,
+    "reason": "用户描述了完整的结构化叙事框架页面结构，符合触发条件"
+  },
+  {
+    "query": "基于模板生成一份结构化的方案评审PPT",
+    "should_trigger": true,
+    "reason": "用户要求生成方案评审PPT，提到模板和结构化，符合触发条件"
+  },
+  {
+    "query": "帮我做份汇报用的PPT，用我给你的模板",
+    "should_trigger": true,
+    "reason": "用户要求生成汇报PPT并提供模板，符合触发条件"
+  },
+  {
+    "query": "生成一个工作汇报的演示文稿，需要由浅入深地展示",
+    "should_trigger": true,
+    "reason": "用户要求工作汇报且强调由浅入深叙事，符合触发条件"
+  },
+  {
+    "query": "根据模板里的品牌色，生成一份结构化的PPT",
+    "should_trigger": true,
+    "reason": "用户提到模板和品牌色，要求结构化PPT，符合触发条件"
+  },
+  {
+    "query": "帮我把这份PPT的第三页标题改一下",
+    "should_trigger": false,
+    "reason": "near-miss：提到了PPT，但需求是修改现有PPT而非生成新的结构化PPT，不应触发"
+  },
+  {
+    "query": "帮我设计一个炫酷的产品发布会PPT，要有动画效果",
+    "should_trigger": false,
+    "reason": "near-miss：提到了PPT，但需求是创意展示，非结构化叙事，不应触发"
+  },
+  {
+    "query": "把这份文档转换成PPT格式",
+    "should_trigger": false,
+    "reason": "near-miss：提到了PPT，但需求是格式转换，不涉及结构化叙事框架，不应触发"
+  },
+  {
+    "query": "PPT模板里有哪些颜色可以用？",
+    "should_trigger": false,
+    "reason": "near-miss：提到了PPT模板，但需求是查询颜色信息，不是生成PPT，不应触发"
+  },
+  {
+    "query": "帮我画个流程图",
+    "should_trigger": false,
+    "reason": "用户要求画流程图，与PPT生成无关，不应触发"
+  },
+  {
+    "query": "这份PPT的配色方案是什么？",
+    "should_trigger": false,
+    "reason": "用户要求分析PPT配色，不是生成PPT，不应触发"
+  },
+  {
+    "query": "生成一个PPT大纲",
+    "should_trigger": false,
+    "reason": "用户要求生成大纲而非实际PPT文件，不应触发本skill（但可能触发其他skill）"
+  },
+  {
+    "query": "我需要个PPT，但是还没想好内容，先随便做一个",
+    "should_trigger": false,
+    "reason": "near-miss：提到了PPT，但缺少必要参数（主题、内容大纲），前置检查不通过，不应生成"
+  },
+  {
+    "query": "用Python给我写个PPT，主题随便",
+    "should_trigger": false,
+    "reason": "near-miss：提到了PPT，但主题和内容大纲缺失，且用户说主题随便，不满足前置检查"
+  },
+  {
+    "query": "帮我做个PPT，不用模板，直接做",
+    "should_trigger": false,
+    "reason": "near-miss：提到了PPT，但用户明确说不用模板，不满足前置检查（必须有模板）"
+  },
+  {
+    "query": "把这份Excel表格转换成PPT里的图表",
+    "should_trigger": false,
+    "reason": "用户要求数据可视化转换，不是结构化叙事PPT生成，不应触发"
+  },
+  {
+    "query": "PPT里怎么插入视频？",
+    "should_trigger": false,
+    "reason": "用户询问PPT操作技巧，不是生成PPT，不应触发"
+  }
+]

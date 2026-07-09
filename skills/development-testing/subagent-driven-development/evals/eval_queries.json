@@ -1,0 +1,92 @@
+[
+  {
+    "query": "按这个计划逐任务执行",
+    "should_trigger": true,
+    "reason": "明确要求按实施计划逐任务执行"
+  },
+  {
+    "query": "用子 Agent 编排来执行这个实施计划",
+    "should_trigger": true,
+    "reason": "明确提到子 Agent 编排"
+  },
+  {
+    "query": "把这个计划里的任务一个个做完",
+    "should_trigger": true,
+    "reason": "隐含了逐任务执行的意思"
+  },
+  {
+    "query": "按计划执行，我已经在 plan.md 里写好了",
+    "should_trigger": true,
+    "reason": "提到了实施计划文件"
+  },
+  {
+    "query": "开始执行实施计划中的任务",
+    "should_trigger": true,
+    "reason": "明确要执行计划中的任务"
+  },
+  {
+    "query": "用 subagent-driven-development 来做这个",
+    "should_trigger": true,
+    "reason": "直接指定 skill 名称"
+  },
+  {
+    "query": "把这几个独立的任务并行处理一下",
+    "should_trigger": true,
+    "reason": "提到了独立任务需要编排执行"
+  },
+  {
+    "query": "按 writing-plans 生成的计划开始执行",
+    "should_trigger": true,
+    "reason": "提到了已有计划需要执行"
+  },
+  {
+    "query": "直接写代码，不用按计划来",
+    "should_trigger": false,
+    "reason": "用户明确说不按计划执行"
+  },
+  {
+    "query": "帮我修个 bug",
+    "should_trigger": false,
+    "reason": "单个 bug 修复，不需要子 Agent 编排"
+  },
+  {
+    "query": "解释一下这段代码",
+    "should_trigger": false,
+    "reason": "纯理解任务"
+  },
+  {
+    "query": "帮我设计一个系统架构",
+    "should_trigger": false,
+    "reason": "设计阶段，还没有实施计划"
+  },
+  {
+    "query": "这个任务怎么做？",
+    "should_trigger": false,
+    "reason": "询问方法，不是执行计划"
+  },
+  {
+    "query": "帮我把这个 CSV 转成 JSON",
+    "should_trigger": false,
+    "reason": "单次转换任务，不需要编排"
+  },
+  {
+    "query": "帮我优化一下性能",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『优化』但属于单点改进，不是多任务编排"
+  },
+  {
+    "query": "这个项目结构有点乱，帮我整理一下",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『项目』但属于重构整理，不是按计划执行"
+  },
+  {
+    "query": "帮我把这几个文件合并成一个",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『几个文件』但属于简单合并操作"
+  },
+  {
+    "query": "帮我测试一下这个接口",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『测试』但属于单次验证，不是多任务编排"
+  }
+]

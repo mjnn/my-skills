@@ -18,47 +18,36 @@ jobs:
       - name: 生成 Skill 索引并更新 README
         run: |
           set -e
+          TABLE="| Skill | 域 | 平台 | 说明 |"
+          TABLE="${TABLE}\n|-------|-----|------|------|"
 
-          # 构建表格
-          TABLE="| Skill | 平台 | 说明 |"
-          TABLE="${TABLE}\n|-------|------|------|"
-
-          for SKILL_DIR in skills/*/; do
-            [ -d "$SKILL_DIR" ] || continue
-            SKILL_NAME=$(basename "$SKILL_DIR")
-            SKILL_MD="${SKILL_DIR}SKILL.md"
-
+          jq -c '.skills[]' registry.json | while read -r entry; do
+            NAME=$(echo "$entry" | jq -r '.name')
+            DOMAIN=$(echo "$entry" | jq -r '.domain')
+            PATH_REL=$(echo "$entry" | jq -r '.path')
+            PLATFORM=$(echo "$entry" | jq -r '.platform')
+            [ "$PLATFORM" = "hana" ] && PLATFORM="HanaAgent"
+            [ "$PLATFORM" = "cursor" ] && PLATFORM="Cursor"
+            [ "$PLATFORM" = "universal" ] && PLATFORM="通用"
+            SKILL_MD="${PATH_REL}/SKILL.md"
             if [ -f "$SKILL_MD" ]; then
               DESC=$(sed -n '/^---$/,/^---$/p' "$SKILL_MD" | grep '^description:' | head -1 | sed 's/^description: *//' | tr -d '\r')
-              # 截取第一句话（到第一个句号）
               DESC=$(echo "$DESC" | sed 's/\.[^.]*$/./')
-
-              # 从 registry 获取 platform
-              PLATFORM=$(jq -r ".skills[] | select(.name == \"$SKILL_NAME\") | .platform // \"unknown\"" registry.json)
-              [ "$PLATFORM" = "hana" ] && PLATFORM="HanaAgent"
-              [ "$PLATFORM" = "cursor" ] && PLATFORM="Cursor"
-              [ "$PLATFORM" = "universal" ] && PLATFORM="通用"
-
-              TABLE="${TABLE}\n| [${SKILL_NAME}](skills/${SKILL_NAME}) | ${PLATFORM} | ${DESC} |"
+              TABLE="${TABLE}\n| [${NAME}](${PATH_REL}) | ${DOMAIN} | ${PLATFORM} | ${DESC} |"
             fi
           done
 
-          # 替换 README 中的标记区域
           perl -i -0777 -pe "s|(<!-- SKILLS_TABLE_START -->).*(<!-- SKILLS_TABLE_END -->)|\1\n${TABLE}\n\n\2|s" README.md
-
-          echo "生成的表格："
           echo -e "$TABLE"
 
       - name: 提交更新
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
           if git diff --quiet README.md; then
-            echo "README 无变化，跳过提交"
+            echo "README 无变化"
           else
             git add README.md
             git commit -m "docs: 自动更新 Skill 索引"
             git push
-            echo "✅ README 索引已更新"
           fi

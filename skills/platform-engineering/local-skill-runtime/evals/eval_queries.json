@@ -1,0 +1,22 @@
+{
+  "should_trigger": [
+    { "query": "检查本机 skill 运行环境", "should_trigger": true, "reason": "核心诊断场景" },
+    { "query": "把设备上的 skill 调到最佳状态", "should_trigger": true, "reason": "调优触发词" },
+    { "query": "vendor 未链接 exit 2 怎么修", "should_trigger": true, "reason": "repair relink" },
+    { "query": "diagnose_local_runtime", "should_trigger": true, "reason": "脚本名" },
+    { "query": "本地 skill 版本和 Hub 不一致", "should_trigger": true, "reason": "Hub 对比" },
+    { "query": "skill-kit 已装但 import 失败", "should_trigger": true, "reason": "运行时治理" },
+    { "query": "重新链接 vendor python-packages", "should_trigger": true, "reason": "relink 能力" },
+    { "query": "本机 Qoder skills 健康检查", "should_trigger": true, "reason": "健康检查" }
+  ],
+  "should_not_trigger": [
+    { "query": "首次配置 Qoder Skills 环境", "should_trigger": false, "reason": "应走 skill-env-setup" },
+    { "query": "创建一个新 Agent Skill", "should_trigger": false, "reason": "应走 skill-bootstrap" },
+    { "query": "修改 skill-bootstrap 正文", "should_trigger": false, "reason": "应走 skill-update" },
+    { "query": "Hub 仓库 README 不一致", "should_trigger": false, "reason": "应走 skill-hub-management" },
+    { "query": "local skill runtime 是什么语言写的", "should_trigger": false, "reason": "near-miss 泛问" },
+    { "query": "winget 安装 Python", "should_trigger": false, "reason": "禁止系统安装" },
+    { "query": "飞书多维表格操作", "should_trigger": false, "reason": "业务 skill" },
+    { "query": "帮我写 PPT 汇报", "should_trigger": false, "reason": "业务 skill near-miss" }
+  ]
+}

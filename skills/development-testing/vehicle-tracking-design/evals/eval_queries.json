@@ -1,0 +1,97 @@
+[
+  {
+    "query": "帮我设计账号APP的埋点方案",
+    "should_trigger": true,
+    "reason": "明确请求车端埋点设计"
+  },
+  {
+    "query": "基于SPEC生成埋点设计xlsx",
+    "should_trigger": true,
+    "reason": "基于SPEC生成埋点，核心触发场景"
+  },
+  {
+    "query": "为中控App Store做事件埋点设计",
+    "should_trigger": true,
+    "reason": "车端应用事件埋点设计"
+  },
+  {
+    "query": "我有UE PDF，帮我做埋点UE校验",
+    "should_trigger": true,
+    "reason": "埋点UE校验是明确触发词"
+  },
+  {
+    "query": "分析这个APP需要哪些tracking events",
+    "should_trigger": true,
+    "reason": "tracking events + APP 埋点分析"
+  },
+  {
+    "query": "生成车端埋点文档，包含转化漏斗和用户路径",
+    "should_trigger": true,
+    "reason": "包含漏斗和路径的埋点文档生成"
+  },
+  {
+    "query": "基于PRD设计HUD应用的analytics design",
+    "should_trigger": true,
+    "reason": "analytics design + 车端HUD场景"
+  },
+  {
+    "query": "副驾屏功能的埋点方案怎么写",
+    "should_trigger": true,
+    "reason": "车端多屏埋点方案"
+  },
+  {
+    "query": "帮我把埋点Excel转成CSV",
+    "should_trigger": false,
+    "reason": "格式转换，非埋点设计生成"
+  },
+  {
+    "query": "评估这个埋点skill的设计质量",
+    "should_trigger": false,
+    "reason": "skill审计场景，应走skill-audit"
+  },
+  {
+    "query": "神策SDK怎么接入Android",
+    "should_trigger": false,
+    "reason": "SDK接入，非设计方案"
+  },
+  {
+    "query": "帮我做BI看板的数据分析报表",
+    "should_trigger": false,
+    "reason": "数据分析报表，非埋点设计"
+  },
+  {
+    "query": "埋点数据怎么在Datadog里查",
+    "should_trigger": false,
+    "reason": "near-miss：含埋点关键词但是查询运维"
+  },
+  {
+    "query": "review一下现有的埋点Excel有没有漏",
+    "should_trigger": false,
+    "reason": "near-miss：含埋点Excel但是审计已有文档"
+  },
+  {
+    "query": "写一个从SPEC提取需求的Python脚本",
+    "should_trigger": false,
+    "reason": "near-miss：含SPEC但是通用脚本开发"
+  },
+  {
+    "query": "tracking point代码怎么在React里实现",
+    "should_trigger": false,
+    "reason": "near-miss：含tracking但是前端代码实现"
+  },
+  {
+    "query": "帮我创建一个新的agent skill",
+    "should_trigger": false,
+    "reason": "skill创建，非埋点设计"
+  },
+  {
+    "query": "事件追踪的隐私合规政策是什么",
+    "should_trigger": false,
+    "reason": "near-miss：含事件追踪但是合规咨询"
+  },
+  {
+    "query": "埋点设计xlsx打开损坏怎么修",
+    "should_trigger": true,
+    "reason": "xlsx 损坏排查属于本 skill 的 xlsx-generation 流程"
+  }
+]

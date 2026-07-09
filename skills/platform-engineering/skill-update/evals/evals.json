@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1,
+    "name": "正常路径-patch版本更新",
+    "prompt": "帮我把 gitlab-repo-upload 技能的 Gotchas 措辞优化一下，当前版本是 v0.2.1",
+    "expected_output": "Agent 按流程执行：收集信息 -> 变更评估（patch: v0.2.1 -> v0.2.2）-> Spec 模式审核 -> 修改 SKILL.md -> 自检清单 13 项 -> 格式预检 -> commit + tag + push -> 创建 Release -> 删除旧 Release -> 同步 README/CATALOG",
+    "assertions": [
+      "使用了 AskUserQuestion 收集技能名称和变更类型",
+      "版本号判定为 patch（v0.2.1 -> v0.2.2）",
+      "使用了 EnterSpecMode 生成变更计划",
+      "自检清单 13 项全部通过后才发布",
+      "发布新 Release 后删除了旧版本 Release",
+      "同步更新了 README.md 和 CATALOG.md 的版本号"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "正常路径-minor版本更新",
+    "prompt": "skill-bootstrap 需要新增一条 Gotchas，当前版本 v0.2.1",
+    "expected_output": "Agent 判定变更类型为 minor（新增 Gotchas），版本号 v0.2.1 -> v0.3.0，走完整流程后发布",
+    "assertions": [
+      "版本号判定为 minor（v0.2.1 -> v0.3.0）",
+      "新增 Gotchas 后同步检查了 eval 用例是否需要补充",
+      "Spec 计划中列出了版本号判定依据",
+      "Release 描述包含完整的技能描述、质量指标、Gotchas 列表"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "异常路径-跳过自检直接发布",
+    "prompt": "帮我快速更新一下 svw-ppt-generator 的 description，改完直接提交就行",
+    "expected_output": "Agent 拒绝跳过自检，解释自检清单是门禁，必须 13 项全部通过才能发布",
+    "assertions": [
+      "拒绝了直接提交的请求",
+      "解释了自检清单是必须的门禁步骤",
+      "仍按完整流程执行了自检"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "异常路径-改了正文不更新eval",
+    "prompt": "帮我把 ask-before-act 的步骤3改一下，其他不用动",
+    "expected_output": "Agent 修改正文步骤后，主动检查 evals.json 中是否有用例覆盖该步骤，如有需要则同步更新",
+    "assertions": [
+      "修改正文后检查了 evals.json 的覆盖情况",
+      "如发现 eval 覆盖缺口则补充了用例",
+      "未跳过 eval 同步步骤"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "边界场景-忘记删除旧Release",
+    "prompt": "把 skill-bootstrap 从 v0.2.1 升级到 v0.3.0 并发布",
+    "expected_output": "Agent 发布新 Release 后，主动删除 v0.2.1 的 Release，确保 Release 页面只展示最新版本",
+    "assertions": [
+      "创建新 Release 后执行了 DELETE API 删除旧 Release",
+      "Release 页面仅保留最新版本"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "边界场景-README和CATALOG不同步",
+    "prompt": "gitlab-repo-upload 版本从 v0.2.1 升到 v0.2.2，帮我发布",
+    "expected_output": "Agent 发布后同步更新 README.md 表格和 CATALOG.md 注册表中的版本号、Release 链接、git clone 命令",
+    "assertions": [
+      "README.md 中的版本号已更新为 v0.2.2",
+      "README.md 中的 Release 链接已更新",
+      "README.md 中的 git clone 命令已更新",
+      "CATALOG.md 中的版本号已更新为 v0.2.2"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "near-miss-创建新skill而非更新",
+    "prompt": "帮我创建一个全新的 PDF 处理 skill",
+    "expected_output": "Agent 不触发 skill-update，而是引导走 skill-bootstrap 流程创建新 skill",
+    "assertions": [
+      "未触发 skill-update 流程",
+      "引导使用了 skill-bootstrap 创建流程"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "边界场景-major版本更新",
+    "prompt": "我要把 svw-ppt-generator 的核心流程结构重构，当前 v0.1.0",
+    "expected_output": "Agent 判定变更类型为 major（修改核心流程结构），版本号 v0.1.0 -> v1.0.0，Spec 计划中强调变更范围大",
+    "assertions": [
+      "版本号判定为 major（v0.1.0 -> v1.0.0）",
+      "Spec 计划中列出了核心流程结构的变更详情",
+      "Release 描述反映了 major 版本变更"
+    ]
+  }
+]

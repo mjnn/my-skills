@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "name": "正常流程：复杂任务先梳理需求",
+    "prompt": "帮我设计一个用户注册系统，包含邮箱验证、密码强度检查、验证码功能。",
+    "expected_output": "Agent 先调用 requirement-briefing skill，按 9 步流程：探索上下文→评估范围→逐一提问→提出方案→分段呈现→写设计文档→设计自查→用户审阅→过渡到 writing-plans。不直接写代码。",
+    "assertions": [
+      "Agent 没有直接开始写代码",
+      "Agent 按顺序完成了探索、提问、方案、设计文档等步骤",
+      "Agent 将设计文档保存到项目文档目录"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "不应触发：用户已有明确设计文档",
+    "prompt": "按这个设计文档帮我实现用户注册系统。[附上已确认的设计文档]",
+    "expected_output": "Agent 识别出已有设计文档且用户已确认，不触发 requirement-briefing 的需求梳理流程，直接进入 writing-plans 或执行阶段。",
+    "assertions": [
+      "Agent 没有重新梳理需求",
+      "Agent 直接基于现有设计文档开始计划或执行"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "不应触发：仅修复单个小 bug",
+    "prompt": "用户注册的验证码邮件收不到，帮我修一下这个 bug。",
+    "expected_output": "Agent 识别出这是单个小 bug 修复，不触发 requirement-briefing，直接定位问题并修复。",
+    "assertions": [
+      "Agent 没有进行需求梳理",
+      "Agent 直接定位并修复验证码邮件发送问题"
+    ]
+  }
+]

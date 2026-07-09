@@ -1,0 +1,22 @@
+{
+  "should_trigger": [
+    { "query": "初始化便携 Python 到 skill-kit", "should_trigger": true, "reason": "skill-kit 核心能力" },
+    { "query": "把 vendor python-packages 链接进便携 Python", "should_trigger": true, "reason": "init_skill_python" },
+    { "query": "QODER_PYTHON 怎么用", "should_trigger": true, "reason": "工具链解析" },
+    { "query": "内网没有 pip 怎么装 requests 到 skill", "should_trigger": true, "reason": "vendor 离线包" },
+    { "query": "skill-kit 便携工具链", "should_trigger": true, "reason": "名称匹配" },
+    { "query": "解压 python.7z", "should_trigger": true, "reason": "安装流程" },
+    { "query": "link_python_packages", "should_trigger": true, "reason": "脚本名" },
+    { "query": "零预装环境运行 Python 脚本", "should_trigger": true, "reason": "场景匹配" }
+  ],
+  "should_not_trigger": [
+    { "query": "修改已有 skill 版本", "should_trigger": false, "reason": "应走 skill-update" },
+    { "query": "创建新 Agent Skill", "should_trigger": false, "reason": "应走 skill-bootstrap" },
+    { "query": "配置 GitLab token 全流程", "should_trigger": false, "reason": "应走 skill-env-setup" },
+    { "query": "飞书多维表格 API", "should_trigger": false, "reason": "业务 skill" },
+    { "query": "skill-kit 是什么编程语言", "should_trigger": false, "reason": "near-miss 泛问" },
+    { "query": "安装系统 Python 3.12", "should_trigger": false, "reason": "禁止系统安装" },
+    { "query": "winget install git", "should_trigger": false, "reason": "禁止外网安装" },
+    { "query": "帮我写 Python 算法题", "should_trigger": false, "reason": "非工具链" }
+  ]
+}

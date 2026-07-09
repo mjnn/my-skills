@@ -1,0 +1,13 @@
+{
+  "evals": [
+    {
+      "id": "install-kit",
+      "prompt": "首次配置 Qoder 环境，机器没有 Python",
+      "expected_output": "先 check_system_deps.ps1 再 install_skill_kit.ps1",
+      "assertions": [
+        { "type": "contains", "value": "skill-kit" },
+        { "type": "contains", "value": "QODER_PYTHON" }
+      ]
+    }
+  ]
+}

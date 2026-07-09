@@ -1,128 +1,326 @@
 {
-  "version": "1.0.0",
-  "updated": "2026-07-07T11:10:00Z",
-  "description": "马捷个人 Skill 注册表，多平台兼容（HanaAgent / Cursor / 通用）",
+  "version": "2.0.0",
+  "updated": "2026-07-09T00:00:00Z",
+  "description": "马捷个人 Skill 注册表 — 域分类布局，兼容 HanaAgent / Cursor / Qoder CN",
+  "layout": "skills/<domain>/<skill-name>/",
   "skills": [
     {
-      "name": "skill-bootstrap",
-      "platform": "cursor",
-      "description": "从零创建 Agent Skill 的质量引导与门禁检查，5 步流程含 AskUserQuestion/Spec 模式规范与 GitLab 发布流程",
-      "version": "0.2.0",
-      "path": "skills/skill-bootstrap",
+      "name": "separate-employee-extraction",
+      "domain": "development-testing",
+      "platform": "universal",
+      "description": "|",
+      "version": "0.0.0",
+      "path": "skills/development-testing/separate-employee-extraction",
       "quality": {
         "gated": true,
-        "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 4 near-miss）",
+        "evalCoverage": "see evals/",
         "securityReviewed": true
       }
     },
     {
-      "name": "skill-publish",
-      "platform": "cursor",
-      "description": "将本地高可用 Skill 发布到 mjnn/my-skills 云端仓库",
-      "version": "0.2.0",
-      "path": "skills/skill-publish",
+      "name": "subagent-driven-development",
+      "domain": "development-testing",
+      "platform": "universal",
+      "description": "拿到实施计划后，逐任务派出子 Agent 执行，每项完成后审查。适用于任务间相对独立的场景，可自动连续推进无需人工介入。不适用于：任务高度耦合（后面依赖前面的中间产物）、单任务即可完成的简单工作、用户要求逐步确认每个任务结果、没有实施计划的场景。",
+      "version": "0.0.0",
+      "path": "skills/development-testing/subagent-driven-development",
       "quality": {
         "gated": true,
-        "evalCoverage": "6 条 eval 用例 + 20 条触发测试（含 5 near-miss）",
-        "securityReviewed": true
-      }
-    },
-    {
-      "name": "ecs-connect",
-      "platform": "cursor",
-      "description": "阿里云 ECS SSH 连通、密钥配置与只读巡检（KeyForAgent / ecs-main）",
-      "version": "0.1.1",
-      "path": "skills/ecs-connect",
-      "quality": {
-        "gated": true,
-        "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 6 near-miss）",
-        "securityReviewed": true
-      }
-    },
-    {
-      "name": "github-connect",
-      "platform": "cursor",
-      "description": "Windows 下 GitHub 连通性验证与 SSH/HTTPS 认证配置",
-      "version": "0.1.1",
-      "path": "skills/github-connect",
-      "quality": {
-        "gated": true,
-        "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 5 near-miss）",
-        "securityReviewed": true
-      }
-    },
-    {
-      "name": "ecs-github-delivery-ops",
-      "platform": "cursor",
-      "description": "ECS Docker Compose 部署、Nginx 反向代理、ACR 镜像推送与 GitHub 交付",
-      "version": "0.1.1",
-      "path": "skills/ecs-github-delivery-ops",
-      "quality": {
-        "gated": true,
-        "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 4 near-miss）",
-        "securityReviewed": true
-      }
-    },
-    {
-      "name": "session-to-rules",
-      "platform": "cursor",
-      "description": "将当前项目会话沉淀为 .cursor/rules 并清理本仓库临时产物",
-      "version": "0.1.1",
-      "path": "skills/session-to-rules",
-      "quality": {
-        "gated": true,
-        "evalCoverage": "5 条 eval 用例 + 16 条触发测试（含 4 near-miss）",
-        "securityReviewed": true
-      }
-    },
-    {
-      "name": "ask-before-act",
-      "platform": "cursor",
-      "description": "Agent 意图不确定时使用 AskUserQuestion 结构化澄清，确认后再执行（含 EnterSpecMode 衔接）",
-      "version": "0.1.0",
-      "path": "skills/ask-before-act",
-      "quality": {
-        "gated": true,
-        "evalCoverage": "7 条 eval 用例 + 20 条触发测试（含 4 near-miss）",
+        "evalCoverage": "see evals/",
         "securityReviewed": true
       }
     },
     {
       "name": "vehicle-tracking-design",
+      "domain": "development-testing",
       "platform": "cursor",
-      "description": "为车端应用生成完整埋点设计方案。基于 SPEC 和 UE PDF，输出 JSON、样式化 Excel（四大 Sheet）及 UE 校验报告（md+docx）",
-      "version": "1.0.0",
-      "path": "skills/vehicle-tracking-design",
+      "description": "为车端应用生成完整埋点设计方案。基于功能 SPEC（DOCX/PDF/Markdown）和可选 UE 设计 PDF，输出含四大 Sheet 的标准化 Excel（事件、用户路径、转化漏斗、关联埋点）。适用于中控、副驾屏、后排屏、SDS 语音、HUD 等车端场景。当用户提到埋点设计、埋点方案、埋点生成、事件埋点、tracking design、基于 SPEC 设计埋点、埋点 UE 校验时使用。不适用于：已有埋点 Excel 的简单格式转换、非车端 Web/App 通用 analytics、神策/GA 等 SDK 代码接入、纯数据分析报表制作、评估/审计已有 skill 质量。",
+      "version": "0.0.0",
+      "path": "skills/development-testing/vehicle-tracking-design",
       "quality": {
         "gated": true,
-        "evalCoverage": "7 条 eval 用例 + 19 条触发测试",
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "verification-before-completion",
+      "domain": "development-testing",
+      "platform": "universal",
+      "description": "任何任务完成后、向用户报告\"做完了\"之前，必须用此 skill 做最终验证。防止\"看起来好了\"就交差的习惯。不适用于：纯聊天/寒暄、用户明确说\"不用验证\"、正在进行中的中间步骤（应在最终完成后验证）、用户说\"先这样\"表示暂不需要完美交付的场景。",
+      "version": "0.0.0",
+      "path": "skills/development-testing/verification-before-completion",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "xuehaiqiang-perspective",
+      "domain": "development-testing",
+      "platform": "universal",
+      "description": "|",
+      "version": "0.0.0",
+      "path": "skills/development-testing/xuehaiqiang-perspective",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
         "securityReviewed": true
       }
     },
     {
       "name": "feishu-bitable-ops",
+      "domain": "general-office",
       "platform": "cursor",
-      "description": "飞书多维表格 Bitable API：初始化配置 App ID/Secret、CRUD、新建授权、他人表协作者、VIN 过筛",
-      "version": "1.0.1",
-      "path": "skills/feishu-bitable-ops",
+      "description": ">-",
+      "version": "0.0.0",
+      "path": "skills/general-office/feishu-bitable-ops",
       "quality": {
         "gated": true,
-        "evalCoverage": "8 条 eval 用例 + 21 条触发测试（含 5 near-miss）",
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "svw-ppt-generator",
+      "domain": "general-office",
+      "platform": "universal",
+      "description": "当用户需要生成遵循\"总分总、由浅入深\"结构化叙事框架的PPT时触发。适用于项目汇报、进度总结、方案评审等工作场景。基于内置标准模板，通过对话式引导完成信息收集、文案确认、排版设计、图表绘制，最终生成统一布局的PPT。不适用于：仅需修改现有PPT的局部内容、非结构化叙事的创意展示、需要手动排版设计的艺术创作。",
+      "version": "0.0.0",
+      "path": "skills/general-office/svw-ppt-generator",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "ask-before-act",
+      "domain": "platform-engineering",
+      "platform": "universal",
+      "description": "当Agent不确定用户诉求、任务细节或执行方向时触发。使用AskUserQuestion工具向用户提出结构化问题，明确用户意图后再继续执行。适用于：任务目标模糊、需求描述不完整、存在多种理解可能、需要确认优先级或偏好等场景。不适用于：用户意图已明确、纯信息查询无需执行、用户明确说\"直接做\"跳过确认、上下文已充分理解的场景。",
+      "version": "0.0.0",
+      "path": "skills/platform-engineering/ask-before-act",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "ecs-connect",
+      "domain": "platform-engineering",
+      "platform": "cursor",
+      "description": ">-",
+      "version": "0.0.0",
+      "path": "skills/platform-engineering/ecs-connect",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "ecs-github-delivery-ops",
+      "domain": "platform-engineering",
+      "platform": "cursor",
+      "description": ">-",
+      "version": "0.0.0",
+      "path": "skills/platform-engineering/ecs-github-delivery-ops",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "github-connect",
+      "domain": "platform-engineering",
+      "platform": "cursor",
+      "description": ">-",
+      "version": "0.0.0",
+      "path": "skills/platform-engineering/github-connect",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "gitlab-repo-upload",
+      "domain": "platform-engineering",
+      "platform": "universal",
+      "description": "当用户要求将本地项目、代码或文件夹上传/推送到 GitLab 仓库时触发。涵盖 git init、.gitignore 配置、remote add、commit、push 全流程，处理企业内网自签名 SSL 证书和 token 认证等常见障碍。push 成功后支持创建 Tag、Release、上传 zip 附件和同步仓库文档。不适用于：仅克隆仓库（git clone）、仅查看仓库信息、GitHub 仓库管理、已有 git 仓库的日常 push/pull 操作、仅修改 .gitignore。",
+      "version": "0.3.0",
+      "path": "skills/platform-engineering/gitlab-repo-upload",
+      "asset": "assets/gitlab-repo-upload-v0.3.0.zip",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "local-skill-runtime",
+      "domain": "platform-engineering",
+      "platform": "universal",
+      "description": "当用户要求检查、诊断、修复或调优本机已安装的 Qoder Skills 运行环境（skill-kit、vendor 链接、Hub 版本）时触发。适用于日常「把设备调到最佳状态」：复检便携 Python/Git、扫描 %USERPROFILE%\\.qoder-cn\\skills\\、修复 vendor 未链、可选 Hub 版本对比与 zip 升级。不适用于：首次零预装环境搭建（用 skill-env-setup）、修改 skill 正文或发布（用 skill-update）、Hub 仓库文档一致性（用 skill-hub-management）、创建新 skill（用 skill-bootstrap）。",
+      "version": "0.1.0",
+      "path": "skills/platform-engineering/local-skill-runtime",
+      "asset": "assets/local-skill-runtime-v0.1.0.zip",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "session-to-rules",
+      "domain": "platform-engineering",
+      "platform": "cursor",
+      "description": "Extracts durable knowledge from the current workspace project only into that project's .cursor/rules/ as .mdc files (never global or user-home rules), and removes session-only artifacts within the same repo. Use when the user asks to 沉淀会话、保存规则到本项目、capture session to project rules、项目规则沉淀、清理临时文件、distill and cleanup, or wants repo-local conventions for this project only—not ~/.cursor/rules or personal skills. 不适用于：创建 Agent Skill（走 skill-bootstrap）、用户全局 ~/.cursor/rules、跨项目 skills 维护（走 ecc-rules-distill）。",
+      "version": "0.0.0",
+      "path": "skills/platform-engineering/session-to-rules",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "skill-bootstrap",
+      "domain": "platform-engineering",
+      "platform": "universal",
+      "description": "当用户要求新建、创建、编写或做一个 Agent Skill 时触发。引导作者按 7 门禁质量标准从零创建高质量 Agent Skill，覆盖领域确认、Gotchas 提炼、正文+eval 交替编写、自检清单、格式预检、产出报告全链路。不适用于：修改已有 skill（走 skill-update）、单纯讨论 skill 设计而不创建、评估第三方 skill（走 skill-audit 流程）、已有 skill 的归档管理。",
+      "version": "0.2.0",
+      "path": "skills/platform-engineering/skill-bootstrap",
+      "asset": "assets/skill-bootstrap-v0.2.0.zip",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "skill-discipline",
+      "domain": "platform-engineering",
+      "platform": "universal",
+      "description": "会话开始时、接到任何任务时、以及想跳过流程直接动手时，必须先过此 skill。它不干具体活，只确保你不会绕过其他 skill。不适用于：用户明确说\"直接做\"\"不用走流程\"、纯聊天/寒暄、系统级查询（如查看当前时间/天气）。",
+      "version": "0.0.0",
+      "path": "skills/platform-engineering/skill-discipline",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "skill-env-setup",
+      "domain": "platform-engineering",
+      "platform": "universal",
+      "description": "当用户首次配置 Qoder Skills 环境、初始化 skill 安装目录、检测内网零预装依赖与 GitLab 连通性时触发。默认先安装 skill-kit 便携工具链（Python/Git/7za，不假设系统已装），再将初始化技能包全部装入 %USERPROFILE%\\.qoder-cn\\skills\\，并链接各 skill 的 vendor/python-packages。不适用于：已配置环境的日常单 skill 更新（用 skill-update）、仅安装单个 skill、非 Qoder CN 环境。",
+      "version": "0.5.0",
+      "path": "skills/platform-engineering/skill-env-setup",
+      "asset": "assets/skill-env-setup-v0.5.0.zip",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "skill-hub-management",
+      "domain": "platform-engineering",
+      "platform": "universal",
+      "description": ">-",
+      "version": "0.0.0",
+      "path": "skills/platform-engineering/skill-hub-management",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "skill-kit",
+      "domain": "platform-engineering",
+      "platform": "universal",
+      "description": "当 skill 需要 Python/Git/解压等系统工具、或需初始化某 skill 的 vendor/python-packages 到便携 Python 时触发。提供企业内网无管理员、无预装工具场景下的共享便携工具链（python.7z、MinGit、7za），安装到 %USERPROFILE%\\.qoder-cn\\tools\\skill-kit\\。不适用于：用户机器已全局安装且明确只用系统 Python/Git；非 Windows 环境（当前仅支持 Windows 便携包）；仅需修改单个 skill 业务逻辑、不涉及工具链的场景。",
+      "version": "0.0.0",
+      "path": "skills/platform-engineering/skill-kit",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "skill-publish",
+      "domain": "platform-engineering",
+      "platform": "universal",
+      "description": "将本地高可用 Skill 发布到 mjnn/my-skills 云端仓库。当用户说「发布这个skill」「上传到my-skills」「入库」「推送到skill仓库」「把这个skill传到云端」时触发。不适用于：创建新 skill（走 skill-bootstrap）、修改已有 skill 内容、纯本地 skill 质量审计。",
+      "version": "0.0.0",
+      "path": "skills/platform-engineering/skill-publish",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "skill-update",
+      "domain": "platform-engineering",
+      "platform": "universal",
+      "description": "当用户要求更新、修改、迭代或升级已有 Agent Skill 时触发。引导按门禁流程完成变更分析、版本判定、正文+eval 同步更新、自检、发布全链路。不适用于：从零创建新 skill（走 skill-bootstrap）、仅讨论 skill 设计不修改、评估第三方 skill（走 skill-audit）、skill 归档管理。",
+      "version": "0.0.0",
+      "path": "skills/platform-engineering/skill-update",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "requirement-briefing",
+      "domain": "project-management",
+      "platform": "universal",
+      "description": "接到任何复杂任务（功能开发、系统搭建、文档撰写、方案设计等）时必须先用此 skill 梳理需求，再动手。禁止跳过设计直接执行。不适用于：已有明确设计文档且用户已确认、仅修复单个小 bug、纯信息查询或讨论思路、已在其他 skill 中完成需求梳理的场景。",
+      "version": "0.0.0",
+      "path": "skills/project-management/requirement-briefing",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
+        "securityReviewed": true
+      }
+    },
+    {
+      "name": "writing-plans",
+      "domain": "project-management",
+      "platform": "universal",
+      "description": "拿到已确认的设计文档或需求后，将其拆解为 bite-size 的可执行任务清单。每个任务 2-5 分钟，含明确文件路径、操作步骤和验证方式。不适用于：没有设计文档或需求就拆任务、用户要求先出代码再补计划、纯探索性任务（需要边做边设计）、任务粒度本身就在 5 分钟以内的简单工作。",
+      "version": "0.0.0",
+      "path": "skills/project-management/writing-plans",
+      "quality": {
+        "gated": true,
+        "evalCoverage": "see evals/",
         "securityReviewed": true
       }
     }
   ],
   "_schema": {
     "skillEntry": {
-      "name": "string — Skill 名称（小写+连字符）",
-      "platform": "hana | cursor | universal — 目标平台",
-      "description": "string — 一句话描述",
-      "version": "string — 语义化版本",
-      "path": "string — 仓库内路径，如 skills/feishu-bitable-setup",
+      "name": "string",
+      "domain": "platform-engineering | general-office | development-testing | project-management | data-analysis",
+      "platform": "hana | cursor | universal",
+      "description": "string",
+      "version": "semver string",
+      "path": "skills/<domain>/<name>",
+      "asset": "optional assets/<name>-vX.Y.Z.zip",
       "quality": {
-        "gated": "boolean — 是否通过质量门控",
-        "evalCoverage": "string — eval 覆盖说明",
-        "securityReviewed": "boolean — 是否通过安全审查"
+        "gated": "bool",
+        "evalCoverage": "string",
+        "securityReviewed": "bool"
       }
     }
   }

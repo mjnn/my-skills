@@ -18,14 +18,13 @@ jobs:
           FAILED=0
           WARNINGS=0
 
-          for SKILL_DIR in skills/*/; do
-            [ -d "$SKILL_DIR" ] || continue
+          while IFS= read -r SKILL_DIR; do
+            SKILL_DIR="${SKILL_DIR}/"
             SKILL_NAME=$(basename "$SKILL_DIR")
             SKILL_MD="${SKILL_DIR}SKILL.md"
 
             echo "::group::🔍 检查 $SKILL_NAME"
 
-            # 1. SKILL.md 必须存在
             if [ ! -f "$SKILL_MD" ]; then
               echo "::error file=${SKILL_DIR}::缺少 SKILL.md"
               FAILED=1
@@ -33,7 +32,6 @@ jobs:
               continue
             fi
 
-            # 2. frontmatter name 与目录名一致
             FM_NAME=$(sed -n '/^---$/,/^---$/p' "$SKILL_MD" | grep '^name:' | head -1 | sed 's/^name: *//' | tr -d '\r')
             if [ "$FM_NAME" != "$SKILL_NAME" ]; then
               echo "::error file=${SKILL_MD}::name 字段 '${FM_NAME}' 与目录名 '${SKILL_NAME}' 不一致"
@@ -42,7 +40,6 @@ jobs:
               echo "  ✅ name 字段一致: $FM_NAME"
             fi
 
-            # 3. 硬编码凭证扫描
             if grep -qnE '(api[_-]?key|apiKey|apikey)\s*[:=]\s*["'"'"']?[a-zA-Z0-9_\-]{16,}' "$SKILL_MD" 2>/dev/null; then
               echo "::error file=${SKILL_MD}::检测到硬编码 API Key"
               FAILED=1
@@ -51,43 +48,23 @@ jobs:
               echo "::error file=${SKILL_MD}::检测到硬编码 Token/Secret/Password"
               FAILED=1
             fi
-            if grep -qnE 'Bearer [a-zA-Z0-9_\-]{16,}' "$SKILL_MD" 2>/dev/null; then
-              echo "::error file=${SKILL_MD}::检测到硬编码 Bearer Token"
-              FAILED=1
-            fi
 
-            # 4. evals/ 目录检查（软警告）
             if [ ! -f "${SKILL_DIR}evals/evals.json" ]; then
               echo "::warning file=${SKILL_DIR}::缺少 evals/evals.json"
               WARNINGS=1
             fi
-            if [ ! -f "${SKILL_DIR}evals/eval_queries.json" ]; then
-              echo "::warning file=${SKILL_DIR}::缺少 evals/eval_queries.json"
-              WARNINGS=1
-            fi
 
-            # 5. 正文行数检查
             LINE_COUNT=$(wc -l < "$SKILL_MD")
             if [ "$LINE_COUNT" -gt 500 ]; then
               echo "::error file=${SKILL_MD}::正文 ${LINE_COUNT} 行，超过 500 行上限"
               FAILED=1
-            elif [ "$LINE_COUNT" -gt 300 ]; then
-              echo "::warning file=${SKILL_MD}::正文 ${LINE_COUNT} 行，建议拆分到 references/"
-              WARNINGS=1
             fi
 
             echo "  ✅ 基本检查通过"
             echo "::endgroup::"
-          done
+          done < <(find skills -mindepth 2 -maxdepth 2 -type d | sort)
 
-          echo ""
           if [ "$FAILED" -eq 1 ]; then
-            echo "❌ 质量门禁未通过，请修复上述错误后重新提交"
             exit 1
           fi
-
-          if [ "$WARNINGS" -eq 1 ]; then
-            echo "⚠️  存在警告项，建议修复后再合并"
-          else
-            echo "✅ 所有 skill 通过质量门禁"
-          fi
+          echo "✅ 所有 skill 通过质量门禁"

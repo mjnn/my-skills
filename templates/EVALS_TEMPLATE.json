@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "{用例名称}",
+    "prompt": "{用户输入的完整 prompt}",
+    "expected_output": "{期望的 Agent 行为描述}",
+    "assertions": [
+      "{可机械判定的断言 1}",
+      "{可机械判定的断言 2}"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "{用例名称}",
+    "prompt": "{用户输入的完整 prompt}",
+    "expected_output": "{期望的 Agent 行为描述}",
+    "assertions": [
+      "{可机械判定的断言 1}",
+      "{可机械判定的断言 2}"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "{用例名称}",
+    "prompt": "{用户输入的完整 prompt}",
+    "expected_output": "{期望的 Agent 行为描述}",
+    "assertions": [
+      "{可机械判定的断言 1}",
+      "{可机械判定的断言 2}"
+    ]
+  }
+]

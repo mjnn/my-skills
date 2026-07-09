@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "正常流程：接到任务先检查 skill",
+    "prompt": "帮我写一个数据分析脚本，把 CSV 文件读入后做统计。",
+    "expected_output": "Agent 在行动前先检查是否有适用的 skill（如 requirement-briefing），确认后才继续。",
+    "assertions": [
+      "Agent 在写代码前检查了是否有适用的 skill",
+      "Agent 调用了 requirement-briefing 来梳理需求"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "不应触发：用户明确说直接做",
+    "prompt": "直接帮我写个脚本，不用走流程了。",
+    "expected_output": "Agent 识别出用户明确说'不用走流程'，不触发 skill-discipline 的强制检查，直接执行。",
+    "assertions": [
+      "Agent 没有强制走流程",
+      "Agent 直接开始执行任务"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "不应触发：纯聊天寒暄",
+    "prompt": "你好，今天天气怎么样？",
+    "expected_output": "Agent 识别出这是纯聊天，不触发 skill-discipline。",
+    "assertions": [
+      "Agent 没有检查 skill 适用性",
+      "Agent 正常回应天气问题"
+    ]
+  }
+]

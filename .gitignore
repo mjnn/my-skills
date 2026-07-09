@@ -1,0 +1,18 @@
+# Skill Hub
+
+## 忽略 CI 产出和临时文件
+evals/**/workspace/
+evals/**/grading.json
+*.tmp
+*.log
+skills.zip
+
+## 忽略 Python 缓存
+**/__pycache__/
+*.pyc
+*.pyo
+
+## IDE
+.idea/
+.vscode/
+*.swp

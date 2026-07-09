@@ -6,6 +6,7 @@ on:
     paths:
       - 'skills/**'
       - 'registry.json'
+      - 'CATALOG.md'
 
 jobs:
   sync-check:
@@ -19,39 +20,29 @@ jobs:
           FAILED=0
 
           echo "::group::📋 Registry → Skills 检查"
-
-          # 从 registry.json 提取已登记的 skill 名称
-          REG_NAMES=$(jq -r '.skills[]?.name // empty' registry.json)
-
-          for name in $REG_NAMES; do
-            if [ ! -d "skills/$name" ]; then
-              echo "::error file=registry.json::registry 登记的 '$name' 在 skills/ 目录中不存在"
+          jq -c '.skills[]' registry.json | while read -r entry; do
+            NAME=$(echo "$entry" | jq -r '.name')
+            PATH_EXPECTED=$(echo "$entry" | jq -r '.path')
+            if [ ! -d "$PATH_EXPECTED" ]; then
+              echo "::error file=registry.json::registry 登记的 '$NAME' 路径 '$PATH_EXPECTED' 不存在"
               FAILED=1
             else
-              echo "  ✅ $name — 已登记且目录存在"
+              echo "  ✅ $NAME — $PATH_EXPECTED"
             fi
           done
-
           echo "::endgroup::"
+
           echo "::group::📁 Skills → Registry 检查"
-
-          # 扫描 skills/ 目录，检查是否都在 registry 中
-          for SKILL_DIR in skills/*/; do
-            [ -d "$SKILL_DIR" ] || continue
+          find skills -mindepth 2 -maxdepth 2 -type d | while read -r SKILL_DIR; do
             SKILL_NAME=$(basename "$SKILL_DIR")
-
-            if ! echo "$REG_NAMES" | grep -qx "$SKILL_NAME"; then
+            if ! jq -e --arg n "$SKILL_NAME" '.skills[] | select(.name == $n)' registry.json > /dev/null; then
               echo "::warning file=${SKILL_DIR}::'$SKILL_NAME' 目录存在但未在 registry.json 中登记"
             fi
           done
-
           echo "::endgroup::"
 
           if [ "$FAILED" -eq 1 ]; then
-            echo ""
             echo "❌ Registry 一致性检查未通过"
             exit 1
           fi
-
-          echo ""
-          echo "✅ Registry 与 skills/ 目录双向一致"
+          echo "✅ Registry 与 skills/ 域目录双向一致"

@@ -1,0 +1,82 @@
+[
+  {
+    "query": "{触发场景 1}",
+    "should_trigger": true,
+    "reason": "{为什么该触发}"
+  },
+  {
+    "query": "{触发场景 2}",
+    "should_trigger": true,
+    "reason": "{为什么该触发}"
+  },
+  {
+    "query": "{触发场景 3}",
+    "should_trigger": true,
+    "reason": "{为什么该触发}"
+  },
+  {
+    "query": "{触发场景 4}",
+    "should_trigger": true,
+    "reason": "{为什么该触发}"
+  },
+  {
+    "query": "{触发场景 5}",
+    "should_trigger": true,
+    "reason": "{为什么该触发}"
+  },
+  {
+    "query": "{触发场景 6}",
+    "should_trigger": true,
+    "reason": "{为什么该触发}"
+  },
+  {
+    "query": "{触发场景 7}",
+    "should_trigger": true,
+    "reason": "{为什么该触发}"
+  },
+  {
+    "query": "{触发场景 8}",
+    "should_trigger": true,
+    "reason": "{为什么该触发}"
+  },
+  {
+    "query": "{near-miss 1}",
+    "should_trigger": false,
+    "reason": "near-miss：{共享关键词}，但{为什么不该触发}"
+  },
+  {
+    "query": "{near-miss 2}",
+    "should_trigger": false,
+    "reason": "near-miss：{共享关键词}，但{为什么不该触发}"
+  },
+  {
+    "query": "{near-miss 3}",
+    "should_trigger": false,
+    "reason": "near-miss：{共享关键词}，但{为什么不该触发}"
+  },
+  {
+    "query": "{near-miss 4}",
+    "should_trigger": false,
+    "reason": "near-miss：{共享关键词}，但{为什么不该触发}"
+  },
+  {
+    "query": "{不触发场景 1}",
+    "should_trigger": false,
+    "reason": "{为什么不该触发}"
+  },
+  {
+    "query": "{不触发场景 2}",
+    "should_trigger": false,
+    "reason": "{为什么不该触发}"
+  },
+  {
+    "query": "{不触发场景 3}",
+    "should_trigger": false,
+    "reason": "{为什么不该触发}"
+  },
+  {
+    "query": "{不触发场景 4}",
+    "should_trigger": false,
+    "reason": "{为什么不该触发}"
+  }
+]

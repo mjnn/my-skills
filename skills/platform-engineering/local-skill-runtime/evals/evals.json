@@ -1,0 +1,49 @@
+{
+  "evals": [
+    {
+      "id": "diagnose-healthy",
+      "prompt": "帮我检查一下本机 skill 环境是否正常",
+      "expected_output": "运行 diagnose_local_runtime.ps1 并输出健康报告",
+      "assertions": [
+        { "type": "contains", "value": "diagnose" },
+        { "type": "contains", "value": "skill-kit" }
+      ]
+    },
+    {
+      "id": "vendor-exit-2",
+      "prompt": "feishu skill 步骤0 退出码2 vendor 未链接怎么办",
+      "expected_output": "引导 local-skill-runtime repair relink，不重跑 skill-env-setup",
+      "assertions": [
+        { "type": "contains", "value": "relink" },
+        { "type": "contains", "value": "skill-env-setup" }
+      ]
+    },
+    {
+      "id": "kit-missing",
+      "prompt": "QODER_PYTHON 不存在，skill 跑不起来",
+      "expected_output": "禁止 repair，引导 skill-env-setup",
+      "assertions": [
+        { "type": "contains", "value": "skill-env-setup" },
+        { "type": "contains", "value": "禁止" }
+      ]
+    },
+    {
+      "id": "hub-upgrade",
+      "prompt": "本机 skill 版本落后 Hub，帮我升级到最新",
+      "expected_output": "EnterSpecMode 后 AskUserQuestion 确认升级范围",
+      "assertions": [
+        { "type": "contains", "value": "EnterSpecMode" },
+        { "type": "contains", "value": "AskUserQuestion" }
+      ]
+    },
+    {
+      "id": "not-first-setup",
+      "prompt": "第一次配置 Qoder 环境，电脑什么都没有",
+      "expected_output": "应走 skill-env-setup 而非 local-skill-runtime",
+      "assertions": [
+        { "type": "contains", "value": "skill-env-setup" },
+        { "type": "contains", "value": "不适用于" }
+      ]
+    }
+  ]
+}

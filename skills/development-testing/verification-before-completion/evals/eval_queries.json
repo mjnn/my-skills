@@ -1,0 +1,92 @@
+[
+  {
+    "query": "我做完了，检查一下",
+    "should_trigger": true,
+    "reason": "明确表示完成任务需要验证"
+  },
+  {
+    "query": "确认一下所有产出都正确",
+    "should_trigger": true,
+    "reason": "需要验证产出"
+  },
+  {
+    "query": "帮我验证一下这个计划是否完成",
+    "should_trigger": true,
+    "reason": "明确需要验证计划完成情况"
+  },
+  {
+    "query": "最后检查一遍再提交",
+    "should_trigger": true,
+    "reason": "提到最后检查"
+  },
+  {
+    "query": "确保所有文件都在正确位置",
+    "should_trigger": true,
+    "reason": "需要验证文件位置和完整性"
+  },
+  {
+    "query": "跑一下验证流程",
+    "should_trigger": true,
+    "reason": "明确要求运行验证"
+  },
+  {
+    "query": "确认一下逻辑没问题",
+    "should_trigger": true,
+    "reason": "需要逻辑验证"
+  },
+  {
+    "query": "对照计划看看有没有遗漏",
+    "should_trigger": true,
+    "reason": "需要计划对照检查"
+  },
+  {
+    "query": "不用验证了，直接说做完了",
+    "should_trigger": false,
+    "reason": "用户明确说不用验证"
+  },
+  {
+    "query": "你好",
+    "should_trigger": false,
+    "reason": "纯寒暄"
+  },
+  {
+    "query": "帮我写个函数",
+    "should_trigger": false,
+    "reason": "正在进行中，不是最终交付"
+  },
+  {
+    "query": "这个怎么实现？",
+    "should_trigger": false,
+    "reason": "询问方法，不是验证"
+  },
+  {
+    "query": "先做个 demo 看看",
+    "should_trigger": false,
+    "reason": "中间步骤，不是最终交付"
+  },
+  {
+    "query": "帮我看看这段代码有没有问题",
+    "should_trigger": false,
+    "reason": "代码审查，不是任务完成验证"
+  },
+  {
+    "query": "帮我优化一下这个函数的性能",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『优化』但属于单点改进，不是整体任务验证"
+  },
+  {
+    "query": "这个测试结果看起来不太对",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『测试』但属于调试过程，不是最终交付验证"
+  },
+  {
+    "query": "帮我把这个文件重命名一下",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『文件』但属于简单操作，不是任务完成"
+  },
+  {
+    "query": "这个设计的思路是什么？",
+    "should_trigger": false,
+    "reason": "near-miss：提到了『设计』但属于理解阶段，不是交付验证"
+  }
+]

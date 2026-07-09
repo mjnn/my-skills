@@ -1,0 +1,97 @@
+[
+  {
+    "id": 1,
+    "name": "正常路径-Python项目首次上传",
+    "prompt": "帮我把 D:\\projects\\myapp 这个 Python 项目上传到 https://gitlab.example.com/team/myapp 仓库",
+    "expected_output": "Agent 按流程执行：检查目录 -> 收集信息(认证方式/分支名/.gitignore/项目类型) -> Spec 模式审核 -> git init -> 创建 .gitignore(含 venv/、__pycache__/、.env) -> remote add -> git add -> 检查 status 确认无敏感文件 -> commit -> push",
+    "assertions": [
+      "在 git add 之前创建了或补充了 .gitignore",
+      ".gitignore 中包含 venv/ 和 __pycache__/ 和 .env",
+      "使用了 AskUserQuestion 工具收集认证方式和分支名",
+      "使用了 EnterSpecMode 生成执行计划",
+      "git add 后检查了 git status 确认无敏感文件"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "异常路径-SSL自签名证书",
+    "prompt": "把 D:\\project 代码推送到 https://internal-gitlab.company.com/team/project 仓库",
+    "expected_output": "Agent 在前置检查阶段检测到 remote URL 为内网地址，提前配置 http.sslVerify false，推送时不因 SSL 报错中断",
+    "assertions": [
+      "在 push 之前配置了 http.sslVerify false",
+      "告知用户禁用 SSL 验证的原因（企业内网自签名证书）",
+      "推送流程未被 SSL 错误打断"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "异常路径-认证失败后重试",
+    "prompt": "帮我把 D:\\code\\app 上传到 https://gitlab.example.com/group/app 仓库，token 是 abc123",
+    "expected_output": "Agent 使用 token 设置 remote URL，推送成功。token 仅用于 remote URL，不被写入任何被跟踪文件",
+    "assertions": [
+      "token 被用于 remote URL 格式 oauth2:<token>@<host>",
+      "token 没有被写入 .gitignore 排除范围之外的任何被跟踪文件",
+      "推送成功后未在 git status 中暴露 token"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "边界场景-项目已有git仓库",
+    "prompt": "D:\\project 已经有 git 仓库了，帮我把它推送到 https://gitlab.example.com/team/project",
+    "expected_output": "Agent 检测到已有 git 仓库，跳过 git init，直接配置 remote 并 push",
+    "assertions": [
+      "没有执行 git init",
+      "检查了已有的 remote 配置，避免重复添加",
+      "直接进入 remote add 和 push 流程"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "边界场景-远程仓库已有内容",
+    "prompt": "帮我把 D:\\newapp 上传到 https://gitlab.example.com/team/newapp，这个仓库已经有 README 了",
+    "prompt_context": "git ls-remote 显示远程已有提交",
+    "expected_output": "Agent 检测到远程非空，使用 AskUserQuestion 询问用户选择 pull --rebase 还是强推",
+    "assertions": [
+      "执行了 git ls-remote 检查远程状态",
+      "检测到远程非空后使用了 AskUserQuestion 提供选项",
+      "提供了 pull --rebase 和 force push 两个选项"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "安全检查-阻止提交env文件",
+    "prompt": "帮我把 D:\\project 上传到 GitLab，项目根目录有 .env 文件包含数据库密码",
+    "expected_output": "Agent 在 .gitignore 中包含 .env，git add 后检查 status 确认 .env 未被跟踪",
+    "assertions": [
+      ".gitignore 中包含 .env",
+      "git add 后执行了 git status 检查",
+      "确认 .env 不在暂存区"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "正常路径-托管型仓库发布后同步",
+    "prompt": "帮我把 D:\\skills\\my-skill 上传到 https://epfa-gitlab.csvw.com/ecc-2/qoder-skills 仓库，这是一个 skill registry",
+    "expected_output": "Agent 完成常规上传后，检测到目标仓库有 README.md/CATALOG.md/docs/ 等管理文件，继续执行：创建 Tag → 创建 Release → 上传 zip 附件 → 获取 uploads 格式链接 → 同步 README/CATALOG/skill-browser → 验证下载链接返回 200",
+    "assertions": [
+      "push 成功后检测了目标仓库是否为托管型仓库",
+      "创建了 Release 并上传了 zip 附件",
+      "下载链接使用了 uploads 格式（非 archive 格式）",
+      "同步更新了 README.md/CATALOG.md 等管理文档",
+      "验证了 zip 下载链接返回 HTTP 200"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "异常路径-archive格式链接404",
+    "prompt": "帮我把 D:\\project 上传到 GitLab，用户反馈文档中的下载链接 404",
+    "prompt_context": "文档中使用了 https://gitlab.example.com/group/proj/-/archive/v1.0/proj-v1.0.zip 格式的链接",
+    "expected_output": "Agent 识别出 archive 格式链接问题，将所有下载链接替换为 uploads 格式，并上传 zip 附件到 Release assets",
+    "assertions": [
+      "识别出 archive 格式链接是 404 的根因",
+      "将下载链接替换为 uploads 格式",
+      "通过 POST /uploads 上传了 zip 附件到 Release",
+      "验证了新链接返回 HTTP 200"
+    ]
+  }
+]

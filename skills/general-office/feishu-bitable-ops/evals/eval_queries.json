@@ -1,0 +1,105 @@
+{
+  "skill": "feishu-bitable-ops",
+  "queries": [
+    {
+      "query": "把这个 xlsx 导入飞书多维表格，新建一个 base",
+      "should_trigger": true,
+      "reason": "新建 Bitable + 导入"
+    },
+    {
+      "query": "读取飞书多维表格 URL 里的全部记录导出成 JSON",
+      "should_trigger": true,
+      "reason": "Bitable 只读 API"
+    },
+    {
+      "query": "飞书 create-app 之后给我 full_access 编辑权限",
+      "should_trigger": true,
+      "reason": "post-create grant-access"
+    },
+    {
+      "query": "同事的多维表格链接给你，帮我批量更新状态列",
+      "should_trigger": true,
+      "reason": "他人表 + 写记录"
+    },
+    {
+      "query": "parse-url 解析这个 my.feishu.cn/base 链接",
+      "should_trigger": true,
+      "reason": "Bitable URL 解析"
+    },
+    {
+      "query": "埋点导出需求收集表里做过 VIN 过筛吗，帮我 check",
+      "should_trigger": true,
+      "reason": "VIN 过筛工作流"
+    },
+    {
+      "query": "list-fields 报 1063002，应用怎么加协作者",
+      "should_trigger": true,
+      "reason": "权限排查"
+    },
+    {
+      "query": "grant-access --app-token 给所有者开可管理",
+      "should_trigger": true,
+      "reason": "CLI 授权子命令"
+    },
+    {
+      "query": "飞书日历里明天有哪些会议",
+      "should_trigger": false,
+      "reason": "日历非 Bitable"
+    },
+    {
+      "query": "帮我写一篇飞书文档 Docx 产品介绍",
+      "should_trigger": false,
+      "reason": "文档非多维表格"
+    },
+    {
+      "query": "在 Excel 里做数据透视表，不用飞书",
+      "should_trigger": false,
+      "reason": "本地 Excel"
+    },
+    {
+      "query": "飞书机器人怎么发群消息",
+      "should_trigger": false,
+      "reason": "IM 非本 skill"
+    },
+    {
+      "query": "Lark Suite 美国区开放平台怎么申请",
+      "should_trigger": false,
+      "reason": "平台入驻非操作表"
+    },
+    {
+      "query": "飞书多维表格和腾讯文档在线表格哪个好用",
+      "should_trigger": false,
+      "reason": "产品对比非操作"
+    },
+    {
+      "query": "互联网获得链接的人可编辑，你是不是就能改多维表格了",
+      "should_trigger": true,
+      "reason": "near-miss：飞书分享权限 vs API，属本 skill 知识"
+    },
+    {
+      "query": "飞书表格 sheet 里公式 SUM 怎么写",
+      "should_trigger": false,
+      "reason": "near-miss：电子表格非 Bitable API"
+    },
+    {
+      "query": "open.feishu.cn Python ConnectionRefusedError 怎么办",
+      "should_trigger": true,
+      "reason": "near-miss：飞书 API 网络，属 api-pitfalls"
+    },
+    {
+      "query": "把埋点事件清单需求表同步到飞书",
+      "should_trigger": true,
+      "reason": "near-miss：埋点+飞书导入"
+    },
+    {
+      "query": "飞书审批流程怎么配置多级审批",
+      "should_trigger": false,
+      "reason": "near-miss：审批非 Bitable"
+    },
+    {
+      "query": "第一次用飞书多维表格技能，怎么配置 App ID 和 Secret",
+      "should_trigger": true,
+      "reason": "技能初始化 / 开放平台凭证"
+    }
+  ]
+}

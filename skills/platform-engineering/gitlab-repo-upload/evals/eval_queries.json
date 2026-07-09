@@ -1,0 +1,102 @@
+[
+  {
+    "query": "帮我把 D:\\MasterAgent\\MasterAgent 这个项目上传到 https://gitlab.example.com/ecc-2/masteragent 这个gitlab仓库里面",
+    "should_trigger": true,
+    "reason": "明确要求上传本地项目到 GitLab 仓库，核心触发场景"
+  },
+  {
+    "query": "把 D:\\project 代码推送到 gitlab 仓库",
+    "should_trigger": true,
+    "reason": "明确提到推送到 GitLab 仓库，触发关键词：推送 + gitlab 仓库"
+  },
+  {
+    "query": "上传代码到 GitLab",
+    "should_trigger": true,
+    "reason": "简短但明确：上传 + GitLab，触发关键词匹配"
+  },
+  {
+    "query": "初始化 git 并推送到 GitLab 仓库",
+    "should_trigger": true,
+    "reason": "需要 git init + push 到 GitLab，完整覆盖 skill 流程"
+  },
+  {
+    "query": "我要把本地项目提交到 gitlab",
+    "should_trigger": true,
+    "reason": "本地项目 + 提交 + gitlab，意图明确"
+  },
+  {
+    "query": "将这个文件夹推送到 GitLab 远程仓库",
+    "should_trigger": true,
+    "reason": "推送文件夹到 GitLab 远程仓库，核心场景"
+  },
+  {
+    "query": "帮我创建 git 仓库并上传到 GitLab",
+    "should_trigger": true,
+    "reason": "需要 git init + 上传到 GitLab，覆盖完整流程"
+  },
+  {
+    "query": "push 项目到 GitLab 仓库 https://gitlab.company.com/team/proj",
+    "should_trigger": true,
+    "reason": "push + GitLab 仓库 URL，明确触发"
+  },
+  {
+    "query": "帮我把项目上传到 GitHub",
+    "should_trigger": false,
+    "reason": "near-miss：上传到 GitHub 不是 GitLab，description 明确排除 GitHub"
+  },
+  {
+    "query": "克隆 GitLab 仓库到本地",
+    "should_trigger": false,
+    "reason": "near-miss：克隆（git clone）是下载不是上传，description 明确排除仅克隆场景"
+  },
+  {
+    "query": "查看 GitLab 仓库里有哪些文件",
+    "should_trigger": false,
+    "reason": "near-miss：查看仓库内容不是上传操作，description 明确排除仅查看场景"
+  },
+  {
+    "query": "帮我修改 .gitignore 文件",
+    "should_trigger": false,
+    "reason": "near-miss：仅修改 .gitignore 不是上传操作，description 明确排除"
+  },
+  {
+    "query": "git pull 拉取 GitLab 最新代码",
+    "should_trigger": false,
+    "reason": "near-miss：pull 是拉取不是上传，description 明确排除日常 push/pull 操作"
+  },
+  {
+    "query": "在 GitLab 网页上创建一个新项目",
+    "should_trigger": false,
+    "reason": "near-miss：在 GitLab 网页创建项目不是本地推送操作"
+  },
+  {
+    "query": "帮我配置 git 全局用户名和邮箱",
+    "should_trigger": false,
+    "reason": "配置 git 用户信息与上传仓库无关"
+  },
+  {
+    "query": "查看 git commit 历史",
+    "should_trigger": false,
+    "reason": "查看提交历史与上传仓库无关"
+  },
+  {
+    "query": "上传项目到 GitLab 并创建 Release 和 zip 附件",
+    "should_trigger": true,
+    "reason": "明确要求上传到 GitLab + 创建 Release + zip 附件，覆盖完整发布流程"
+  },
+  {
+    "query": "上传代码到 GitLab 后同步 README 文档",
+    "should_trigger": true,
+    "reason": "上传代码到 GitLab + 同步文档，description 已覆盖文档同步流程"
+  },
+  {
+    "query": "下载 GitLab Release 的 zip 附件",
+    "should_trigger": false,
+    "reason": "near-miss：下载 Release 附件是下载操作不是上传，与 description 的上传方向相反"
+  },
+  {
+    "query": "在 GitLab 上创建 Release 但不需要上传代码",
+    "should_trigger": false,
+    "reason": "near-miss：仅创建 Release 无上传动作，缺少 git init/push 核心流程，description 要求是上传/推送到 GitLab"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "query": "部署到 ECS 并 push 镜像到阿里云",
+    "should_trigger": true,
+    "reason": "核心触发关键词"
+  },
+  {
+    "query": "帮我用 ecs-github-delivery-ops 处理任务",
+    "should_trigger": true,
+    "reason": "明确点名 skill"
+  },
+  {
+    "query": "按照 ecs-github-delivery-ops 的流程来做",
+    "should_trigger": true,
+    "reason": "流程触发"
+  },
+  {
+    "query": "需要 ecs-github-delivery-ops 技能",
+    "should_trigger": true,
+    "reason": "技能名称触发"
+  },
+  {
+    "query": "请启用 ecs-github-delivery-ops",
+    "should_trigger": true,
+    "reason": "启用请求"
+  },
+  {
+    "query": "用 ecs-github-delivery-ops 标准操作",
+    "should_trigger": true,
+    "reason": "标准操作"
+  },
+  {
+    "query": "按 ecs-github-delivery-ops 规范执行",
+    "should_trigger": true,
+    "reason": "规范触发"
+  },
+  {
+    "query": "走 ecs-github-delivery-ops 流程",
+    "should_trigger": true,
+    "reason": "流程关键词"
+  },
+  {
+    "query": "只测试 ECS SSH 能不能连上",
+    "should_trigger": false,
+    "reason": "near-miss：共享领域关键词但属于排除场景"
+  },
+  {
+    "query": "修改已有 ecs-github-delivery-ops 的配置文件",
+    "should_trigger": false,
+    "reason": "near-miss：含 skill 名但是修改而非使用流程"
+  },
+  {
+    "query": "评估 ecs-github-delivery-ops 质量合不合格",
+    "should_trigger": false,
+    "reason": "near-miss：审计非执行"
+  },
+  {
+    "query": "讨论 ecs-github-delivery-ops 的设计思路",
+    "should_trigger": false,
+    "reason": "near-miss：讨论不执行"
+  },
+  {
+    "query": "今天天气怎么样",
+    "should_trigger": false,
+    "reason": "完全无关"
+  },
+  {
+    "query": "帮我写个 Python hello world",
+    "should_trigger": false,
+    "reason": "无关编程请求"
+  },
+  {
+    "query": "什么是机器学习",
+    "should_trigger": false,
+    "reason": "概念问答无关"
+  },
+  {
+    "query": "列出所有可用工具",
+    "should_trigger": false,
+    "reason": "元查询非 skill 任务"
+  }
+]
