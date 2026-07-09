@@ -27,5 +27,5 @@
 - 作者：MaJienuona
 - 日期：2026-07-03
 - skill 名称：skill-bootstrap
-- 版本：v0.3.0
+- 版本：v0.2.0
 - 所属域：platform-engineering

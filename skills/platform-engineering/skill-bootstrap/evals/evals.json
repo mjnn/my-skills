@@ -48,7 +48,7 @@
     "id": 5,
     "name": "边界场景-description缺少排除场景",
     "prompt": "帮我写个skill，description只写了触发场景",
-    "expected_output": "Agent 检测到 description 缺少"不适用于"段落，要求补充至少 3 个不应触发的场景",
+    "expected_output": "Agent 检测到 description 缺少「不适用于」段落，要求补充至少 3 个不应触发的场景",
     "assertions": [
       "检测到 description 缺少排除场景",
       "要求补充不适用于的场景",
