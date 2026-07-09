@@ -23,13 +23,25 @@ Agent 在执行 skill 发布时会反复犯以下错误：
 5. **覆盖已有 skill 不警告** — 目标路径已存在时直接覆盖，不告知用户。纠正：上传前检查目标路径是否存在，存在则询问用户是覆盖还是跳过。
 6. **commit message 太随意** — 写 "update" "fix" 这种无意义信息。纠正：commit message 必须包含 skill 名称、版本号、变更摘要。
 7. **不验证 GitHub 仓库可访问性** — 直接调 API 假设仓库存在且可写入。纠正：上传前先验证 `mjnn/my-skills` 仓库存在且可访问。
+8. **本机用 HTTPS push 超时** — 443 可能不通。**纠正：remote 设为 `git@github.com:mjnn/my-skills.git`；推送前走 **github-connect** 验收 `ssh -T`（账号 mjnn，指纹见 reference）。**
+
+## 本机 GitHub 连接（已配置）
+
+| 项 | 值 |
+|----|-----|
+| 仓库 | `git@github.com:mjnn/my-skills.git` |
+| SSH 密钥 | `~/.ssh/id_ed25519_github` |
+| 账号 | `mjnn` |
+| 指纹 | `SHA256:NtjZ5te0PJybwqFJdXpSLjEaVki+FAWOIf5//tbXOOA` |
+
+推送前：`ssh -T git@github.com` 含 `Hi mjnn`；`git remote -v` 为 SSH URL。详见 **github-connect** `reference.md`。
 
 ## 流程
 
 ### 第一步：确认发布目标
 
 Agent 向用户确认：
-1. **Skill 本地路径**：用户 skill 目录下的 `<skill-name>/`（如项目 `.cursor/skills/`、`.qoder-cn/skills/`）或用户指定路径
+1. **Skill 本地路径**：位于 `~/.hanako/skills/<skill-name>/` 或用户指定的路径
 2. **版本号**：语义化版本（如 `v1.0.0`），如果 SKILL.md 未标注则询问用户
 
 如果用户只说"发布这个 skill"但没给路径，Agent 应根据当前上下文推断（如刚创建的 skill、刚修改的 skill），推断不出则询问。
@@ -62,20 +74,22 @@ Agent 向用户确认：
 
 ### 第四步：检查远程冲突
 
-通过 GitHub API 检查 `mjnn/my-skills` 仓库中 `skills/<域>/<skill-name>/` 是否已存在：
+通过 GitHub API 检查 `mjnn/my-skills` 仓库中 `skills/<skill-name>/` 是否已存在：
 
 - **不存在** → 继续
 - **已存在** → 列出已有文件列表，使用 AskUserQuestion 询问用户：覆盖 / 跳过 / 取消
 
 ### 第五步：上传到 GitHub
 
-使用 GitHub MCP 工具 `push_files` 或逐个 `create_or_update_file`，将收集的文件推送到 `mjnn/my-skills`：
+**本机优先 git push**（SSH remote，见上文「本机 GitHub 连接」）；API/MCP 为备选。
+
+使用 GitHub MCP 工具 `push_files` 或 `git push` 到 `mjnn/my-skills`：
 
 ```
 owner: mjnn
 repo: my-skills
 branch: main
-路径前缀: skills/<domain>/<skill-name>/
+路径前缀: skills/<skill-name>/
 ```
 
 commit message 格式：
@@ -99,10 +113,10 @@ publish: feishu-bitable-setup v1.0.0 — 飞书多维表格快速搭建
 ```json
 {
   "name": "<skill-name>",
-  "domain": "<platform-engineering | general-office | ...>",
+  "platform": "<hana | cursor | universal>",
   "description": "<从 SKILL.md description 提取>",
   "version": "<version>",
-  "path": "skills/<domain>/<skill-name>",
+  "path": "skills/<skill-name>",
   "quality": {
     "gated": true,
     "evalCoverage": "<eval 用例数 + 触发测试数>",
@@ -121,10 +135,10 @@ registry: add/update <skill-name> v<version>
 ```
 ✅ 发布完成：<skill-name> v<version>
 
-域：<domain>
+平台：<hana | cursor | universal>
 上传文件：N 个
-Registry / CATALOG：已更新
-GitHub：https://github.com/mjnn/my-skills/tree/main/skills/<domain>/<skill-name>
+Registry：已更新
+GitHub：https://github.com/mjnn/my-skills/tree/main/skills/<skill-name>
 ```
 
 ## 异常处理

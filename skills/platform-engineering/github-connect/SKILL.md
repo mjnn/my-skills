@@ -25,6 +25,12 @@ description: >-
 3. **Git 安装后未刷新 PATH** — 当前会话找不到 git。**纠正：重装后刷新 Machine+User PATH 或新开终端。**
 4. **公钥未加 GitHub 就宣布成功** — 后续 push 失败。**纠正：等用户确认 Settings 已添加。**
 5. **与 ecs-github-delivery-ops 混淆** — 仅测连接却执行部署。**纠正：commit/push/ECS 转 delivery-ops。**
+6. **HTTPS push 超时仍用 https remote** — 本机 443 可能不通。**纠正：remote 改为 `git@github.com:...`；见 [reference.md · 本机环境](reference.md)。**
+
+## 本机已验证（svw / mjnn）
+
+本机已配置 `id_ed25519_github`，GitHub 账号 **mjnn**，指纹 `SHA256:NtjZ5te0PJybwqFJdXpSLjEaVki+FAWOIf5//tbXOOA`。  
+**跳过密钥生成**，直接 `ssh -T` 验收；push/clone 用 SSH remote。详情：[reference.md · 本机环境](reference.md)。
 
 ## 流程
 
@@ -51,6 +57,9 @@ description: >-
 | SSH 私钥 | `~/.ssh/id_ed25519_github` | 用户指定或重新 `ssh-keygen` |
 | SSH 公钥 | `~/.ssh/id_ed25519_github.pub` | 同上 |
 | 密钥注释 | `svw-github` | `ssh-keygen -C` |
+| 本机公钥指纹 | `SHA256:NtjZ5te0PJybwqFJdXpSLjEaVki+FAWOIf5//tbXOOA` | 与 GitHub Settings 核对 |
+| GitHub 账号（本机） | `mjnn` | `ssh -T` 输出 Hi mjnn |
+| my-skills remote | `git@github.com:mjnn/my-skills.git` | 本机勿用 HTTPS（443 可能超时） |
 | Git 安装 | Git for Windows（winget `Git.Git`） | 用户指定路径 |
 | 推荐克隆 URL | `git@github.com:<owner>/<repo>.git` | 或 HTTPS |
 

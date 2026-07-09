@@ -2,6 +2,29 @@
 
 用户环境默认值；对话中可被用户显式覆盖。
 
+## 本机已验证环境（svw / mjnn）
+
+> 2026-07-09 验收通过。Agent 在本机操作 GitHub 时**优先使用以下默认值**，勿重复生成密钥。
+
+| 项 | 值 |
+|----|-----|
+| GitHub 账号 | `mjnn` |
+| SSH 私钥 | `C:\Users\svw\.ssh\id_ed25519_github` |
+| SSH 公钥 | `C:\Users\svw\.ssh\id_ed25519_github.pub` |
+| 密钥注释 | `svw-github` |
+| 公钥指纹 (SHA256) | `SHA256:NtjZ5te0PJybwqFJdXpSLjEaVki+FAWOIf5//tbXOOA` |
+| `ssh -T` 验收 | `Hi mjnn! You've successfully authenticated...` |
+| 推荐 remote | `git@github.com:<owner>/<repo>.git` |
+| my-skills 仓库 | `git@github.com:mjnn/my-skills.git` |
+
+**本机网络注意**：HTTPS `443` 可能无法连接 GitHub（超时）；`git push` / `git clone` **必须用 SSH**（22 端口）。若 remote 为 HTTPS 且失败：
+
+```powershell
+git remote set-url origin git@github.com:<owner>/<repo>.git
+```
+
+核对 GitHub Settings 中公钥指纹与上表 SHA256 一致即表示密钥配对正确。
+
 ## SSH / Git 文件（Windows）
 
 | 文件 | 典型路径 |

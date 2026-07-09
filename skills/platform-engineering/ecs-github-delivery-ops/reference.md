@@ -2,6 +2,18 @@
 
 以下为用户环境的**默认约定**，可在对话中被用户显式覆盖。
 
+## GitHub（本机 svw / mjnn）
+
+| 项 | 值 |
+|----|-----|
+| 默认 remote | `git@github.com:<owner>/<repo>.git` |
+| my-skills | `git@github.com:mjnn/my-skills.git` |
+| SSH 密钥 | `~/.ssh/id_ed25519_github`（勿用 KeyForAgent.pem） |
+| 账号 | `mjnn` |
+| 指纹 | `SHA256:NtjZ5te0PJybwqFJdXpSLjEaVki+FAWOIf5//tbXOOA` |
+
+**本机**：HTTPS `443` 可能超时；`git push` 必须用 SSH。push 前验收见 **github-connect**。
+
 ## SSH
 
 | 项 | 默认值 |
