@@ -1,24 +1,54 @@
 # 技能浏览器
 
-> mjnn/my-skills 个人 Agent Skill 索引
+> mjnn/my-skills 个人 Agent Skill 索引（共 9 个）
 
 ## 技能总览
 
-| 技能 | 域 | 版本 | 描述 |
-|------|-----|------|------|
-| [ask-before-act](skills/platform-engineering/ask-before-act) | platform-engineering | v0.0.0 | 当Agent不确定用户诉求、任务细节或执行方向时触发。使用AskUserQuestion工具向用户提出结构化问题，明确用户意图后再继续执行。适用于：任务目标模糊… |
-| [ecs-connect](skills/platform-engineering/ecs-connect) | platform-engineering | v0.0.0 | Connects to the user's Alibaba Cloud ECS via SSH (alias ecs-main, KeyForAgent ke… |
-| [ecs-github-delivery-ops](skills/platform-engineering/ecs-github-delivery-ops) | platform-engineering | v0.0.0 | Connects to the user's ECS via SSH, deploys services with Docker Compose, config… |
-| [feishu-bitable-ops](skills/general-office/feishu-bitable-ops) | general-office | v0.0.0 | 飞书开放平台多维表格 (Bitable) API 操作：首次初始化引导配置开放平台 App ID/Secret、 新建 Base 后自动授予用户可管理权限、操作… |
-| [github-connect](skills/platform-engineering/github-connect) | platform-engineering | v0.0.0 | Verifies GitHub connectivity on Windows: Git CLI install, HTTPS/SSH network chec… |
-| [session-to-rules](skills/platform-engineering/session-to-rules) | platform-engineering | v0.0.0 | Extracts durable knowledge from the current workspace project only into that pro… |
-| [skill-bootstrap](skills/platform-engineering/skill-bootstrap) | platform-engineering | v0.2.0 | 当用户要求新建、创建、编写或做一个 Agent Skill 时触发。引导作者按 7 门禁质量标准从零创建高质量 Agent Skill，覆盖领域确认、Gotch… |
-| [skill-publish](skills/platform-engineering/skill-publish) | platform-engineering | v0.0.0 | 将本地高可用 Skill 发布到 mjnn/my-skills 云端仓库。当用户说「发布这个skill」「上传到my-skills」「入库」「推送到skill仓… |
-| [vehicle-tracking-design](skills/development-testing/vehicle-tracking-design) | development-testing | v0.0.0 | 为车端应用生成完整埋点设计方案。基于功能 SPEC（DOCX/PDF/Markdown）和可选 UE 设计 PDF，输出含四大 Sheet 的标准化 Excel… |
+| 技能 | 域 | 版本 | 一句话 |
+|------|-----|------|--------|
+| [ask-before-act](skills/platform-engineering/ask-before-act) | platform-engineering | v0.1.0 | 意图不清时结构化提问，确认后再执行 |
+| [ecs-connect](skills/platform-engineering/ecs-connect) | platform-engineering | v0.1.1 | 阿里云 ECS SSH 连通与巡检 |
+| [ecs-github-delivery-ops](skills/platform-engineering/ecs-github-delivery-ops) | platform-engineering | v0.1.1 | ECS Docker 部署 + Nginx + GitHub 交付 |
+| [github-connect](skills/platform-engineering/github-connect) | platform-engineering | v0.1.1 | Windows GitHub 连通与认证 |
+| [session-to-rules](skills/platform-engineering/session-to-rules) | platform-engineering | v0.1.1 | 会话知识沉淀为项目 `.cursor/rules` |
+| [skill-bootstrap](skills/platform-engineering/skill-bootstrap) | platform-engineering | v0.2.0 | 7 门禁引导创建新 Skill |
+| [skill-publish](skills/platform-engineering/skill-publish) | platform-engineering | v0.2.0 | 发布 skill 到本仓库 |
+| [feishu-bitable-ops](skills/general-office/feishu-bitable-ops) | general-office | v1.0.1 | 飞书多维表格 API 操作 |
+| [vehicle-tracking-design](skills/development-testing/vehicle-tracking-design) | development-testing | v1.0.0 | 车端埋点方案 Excel + UE 校验 |
+
+## 按域浏览
+
+### platform-engineering
+
+基础设施与 Skill 工程：连通性（ECS、GitHub）、交付运维、创建/发布 skill、项目规则沉淀。
+
+```bash
+git clone --filter=blob:none --sparse https://github.com/mjnn/my-skills.git
+cd my-skills && git sparse-checkout set skills/platform-engineering
+```
+
+### general-office
+
+办公自动化：飞书 Bitable。
+
+```bash
+git sparse-checkout set skills/general-office/feishu-bitable-ops
+```
+
+### development-testing
+
+领域方案：车端埋点设计。
+
+```bash
+git sparse-checkout set skills/development-testing/vehicle-tracking-design
+```
 
 ## 安装
 
+将目标目录复制到本机 skill 根目录即可，例如：
+
 ```bash
-git clone https://github.com/mjnn/my-skills.git
-cp -r my-skills/skills/<domain>/<skill-name> <你的-skill-目录>/
+cp -r my-skills/skills/platform-engineering/github-connect ~/.cursor/skills/
 ```
+
+或解压 [assets/](assets/) 中的 zip。

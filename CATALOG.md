@@ -1,6 +1,6 @@
 # Skill Catalog
 
-> mjnn/my-skills 个人 Skill 注册表
+> mjnn/my-skills 个人 Skill 注册表（9 个，不含企业 Qoder Hub skill）
 > 最后更新：2026-07-09
 
 ## 目录

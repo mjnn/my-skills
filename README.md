@@ -1,39 +1,76 @@
 # my-skills
 
-> 马捷个人 Agent Skill 统一云端仓库
-> 一套技能、一种目录结构，任意 Agent 环境按需安装
+> 马捷（mjnn）个人 Agent Skill 云端仓库  
+> 质量门控 · 域分类 · 宁缺毋滥
 
-## 仓库定位
+## 这是什么
 
-本仓库是个人 AI Agent Skill 的**唯一**归档与分发节点：所有 skill 共用同一套域分类、注册表与发布 zip，不按编辑器或运行时拆分。
+本仓库收录**个人维护**的高可用 Agent Skill，作为统一归档与分发节点。所有 skill 共用一套目录结构与注册表，**不按编辑器或运行时拆分**，克隆到任意 Agent 的 skill 目录即可使用。
 
-| 安装方式 | 说明 |
-|----------|------|
-| **源码目录** | 克隆或 sparse-checkout `skills/<域>/<skill-name>/` 到本机 skill 目录 |
-| **离线 zip** | 下载 `assets/<skill>-vX.Y.Z.zip` 解压到 skill 安装根目录 |
-| **整库引用** | Agent 配置中引用 `github.com/mjnn/my-skills` 子路径 |
+**不包含**企业内网 Qoder Skills Hub 中的 skill（如 skill-env-setup、skill-kit、svw-ppt-generator 等）。那些 skill 由企业 GitLab 仓库单独分发；本仓库仅存放个人场景下验证过的 skill。
 
-常见 skill 安装根目录（按环境自动识别，无需在仓库内区分）：
+## 收录范围（9 个）
 
-- 项目级：`<项目>/.cursor/skills/` 或 `<项目>/.qoder/skills/`
-- 用户级：`~/.cursor/skills/`、`~/.qoder-cn/skills/` 等
+| 域 | 数量 | 侧重 |
+|----|------|------|
+| [platform-engineering](skills/platform-engineering/) | 7 | 基础设施连通、Skill 工程化、会话沉淀 |
+| [general-office](skills/general-office/) | 1 | 飞书多维表格办公自动化 |
+| [development-testing](skills/development-testing/) | 1 | 车端埋点方案设计 |
+
+**平台工程** — 不确定先问（ask-before-act）、阿里云 ECS / GitHub 连通与交付（ecs-connect、github-connect、ecs-github-delivery-ops）、Skill 创建与发布（skill-bootstrap、skill-publish）、项目规则沉淀（session-to-rules）
+
+**通用办公** — 飞书 Bitable API 全流程（feishu-bitable-ops）
+
+**开发测试** — 基于 SPEC/UE 生成车端埋点 Excel 与校验报告（vehicle-tracking-design）
+
+## 如何安装
+
+任选一种方式，将 skill 放到本机 **skill 安装根目录**（由 Agent 环境决定，例如项目 `.cursor/skills/` 或用户 `~/.cursor/skills/`）：
+
+**方式一：拷贝源码目录（推荐）**
+
+```bash
+git clone https://github.com/mjnn/my-skills.git
+cp -r my-skills/skills/<域>/<skill-name>/ <skill-root>/
+```
+
+**方式二：Sparse Checkout（只拉一个 skill）**
+
+```bash
+git clone --filter=blob:none --sparse https://github.com/mjnn/my-skills.git
+cd my-skills
+git sparse-checkout set skills/platform-engineering/github-connect
+cp -r skills/platform-engineering/github-connect <skill-root>/
+```
+
+**方式三：离线 zip**
+
+从 [assets/](assets/) 下载 `<skill-name>-vX.Y.Z.zip`，解压到 `<skill-root>/`。
+
+## 收录标准
+
+| 维度 | 要求 |
+|------|------|
+| 命名 | 小写 + 连字符，目录名与 `SKILL.md` 的 `name` 一致 |
+| 质量 | `SKILL.md` 完整 + `evals/` 覆盖 + 至少一次实战验证 |
+| 安全 | 无硬编码密钥、无任意命令注入 |
+| 边界 | 单一职责，不与已有 skill 高度重叠 |
+| 原则 | **宁缺毋滥** — 未达质量门控的不入库 |
 
 ## 目录结构
 
 ```
 my-skills/
-├── README.md
-├── CATALOG.md
-├── registry.json
-├── AGENTS.md
-├── CONTRIBUTING.md
-├── assets/
-├── docs/
+├── README.md           # 本文件
+├── CATALOG.md          # 人类可读注册表
+├── registry.json       # 机器可读注册表
+├── assets/             # 单 skill 发布 zip
+├── docs/               # 技能浏览器、生命周期规范
 ├── skills/
 │   ├── platform-engineering/
 │   ├── general-office/
 │   └── development-testing/
-└── templates/
+└── templates/          # 新建 skill 模板
 ```
 
 ## 已收录 Skill
@@ -41,23 +78,28 @@ my-skills/
 <!-- SKILLS_TABLE_START -->
 | Skill | 域 | 说明 |
 |-------|-----|------|
-| [ask-before-act](skills/platform-engineering/ask-before-act) | platform-engineering | 当Agent不确定用户诉求、任务细节或执行方向时触发。使用AskUserQuestion工具向用户提出结构化问题，明确用户意图后再继续执行。适用于：任务目标模糊、需求描述不完整、存在多种理解可能、需要… |
-| [ecs-connect](skills/platform-engineering/ecs-connect) | platform-engineering | Connects to the user's Alibaba Cloud ECS via SSH (alias ecs-main, KeyForAgent key pair), verifies co… |
-| [ecs-github-delivery-ops](skills/platform-engineering/ecs-github-delivery-ops) | platform-engineering | Connects to the user's ECS via SSH, deploys services with Docker Compose, configures Nginx reverse-p… |
-| [feishu-bitable-ops](skills/general-office/feishu-bitable-ops) | general-office | 飞书开放平台多维表格 (Bitable) API 操作：首次初始化引导配置开放平台 App ID/Secret、 新建 Base 后自动授予用户可管理权限、操作他人表格的协作者配置、用户车 VIN 过… |
-| [github-connect](skills/platform-engineering/github-connect) | platform-engineering | Verifies GitHub connectivity on Windows: Git CLI install, HTTPS/SSH network checks, SSH key setup (i… |
-| [session-to-rules](skills/platform-engineering/session-to-rules) | platform-engineering | Extracts durable knowledge from the current workspace project only into that project's .cursor/rules… |
-| [skill-bootstrap](skills/platform-engineering/skill-bootstrap) | platform-engineering | 当用户要求新建、创建、编写或做一个 Agent Skill 时触发。引导作者按 7 门禁质量标准从零创建高质量 Agent Skill，覆盖领域确认、Gotchas 提炼、正文+eval 交替编写、自… |
-| [skill-publish](skills/platform-engineering/skill-publish) | platform-engineering | 将本地高可用 Skill 发布到 mjnn/my-skills 云端仓库。当用户说「发布这个skill」「上传到my-skills」「入库」「推送到skill仓库」「把这个skill传到云端」时触发。… |
-| [vehicle-tracking-design](skills/development-testing/vehicle-tracking-design) | development-testing | 为车端应用生成完整埋点设计方案。基于功能 SPEC（DOCX/PDF/Markdown）和可选 UE 设计 PDF，输出含四大 Sheet 的标准化 Excel（事件、用户路径、转化漏斗、关联埋点）。… |
+| [ask-before-act](skills/platform-engineering/ask-before-act) | platform-engineering | 意图不确定时，用 AskUserQuestion 结构化澄清后再执行。 |
+| [ecs-connect](skills/platform-engineering/ecs-connect) | platform-engineering | 阿里云 ECS SSH 连通、密钥配置与只读巡检。 |
+| [ecs-github-delivery-ops](skills/platform-engineering/ecs-github-delivery-ops) | platform-engineering | ECS 上 Docker Compose 部署、Nginx 反代、ACR 与 GitHub 交付。 |
+| [github-connect](skills/platform-engineering/github-connect) | platform-engineering | Windows 下 GitHub 连通性验证与 SSH/HTTPS 认证配置。 |
+| [session-to-rules](skills/platform-engineering/session-to-rules) | platform-engineering | 将当前项目会话沉淀为 `.cursor/rules` 并清理临时产物。 |
+| [skill-bootstrap](skills/platform-engineering/skill-bootstrap) | platform-engineering | 按 7 门禁从零创建高质量 Agent Skill。 |
+| [skill-publish](skills/platform-engineering/skill-publish) | platform-engineering | 将本地 skill 发布回本仓库并更新 registry。 |
+| [feishu-bitable-ops](skills/general-office/feishu-bitable-ops) | general-office | 飞书多维表格 API：配置、CRUD、授权与协作者管理。 |
+| [vehicle-tracking-design](skills/development-testing/vehicle-tracking-design) | development-testing | 基于 SPEC/UE 生成车端埋点 Excel 与 UE 校验报告。 |
 
 <!-- SKILLS_TABLE_END -->
 
 ## 文档
 
-- [技能浏览器](docs/skill-browser.md)
-- [生命周期规范](docs/lifecycle-spec.md)
-- [目录注册表](CATALOG.md)
+- [技能浏览器](docs/skill-browser.md) — 分域浏览与安装示例
+- [目录注册表](CATALOG.md) — 版本与路径一览
+- [贡献指南](CONTRIBUTING.md) — 新增 / 更新 skill 流程
+- [生命周期规范](docs/lifecycle-spec.md) — 版本与门禁说明
+
+## 贡献
+
+欢迎 PR。新增 skill 请附功能说明、eval 用例，以及与已有 skill 的差异说明。详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ---
 
