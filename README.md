@@ -32,8 +32,7 @@ my-skills/
 ├── skills/
 │   ├── platform-engineering/
 │   ├── general-office/
-│   ├── development-testing/
-│   └── project-management/
+│   └── development-testing/
 └── templates/
 ```
 
