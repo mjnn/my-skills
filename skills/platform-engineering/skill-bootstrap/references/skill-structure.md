@@ -16,26 +16,34 @@ description: {触发场景和排除场景}
 
 <HARD-GATE>
 {禁止在批准前执行的操作}
+{禁止假设系统 Python/Git/pip 可用}
 {必须使用 AskUserQuestion 的约束}
 {必须使用 EnterSpecMode/ExitSpecMode 的约束}
 </HARD-GATE>
 
+## 能力边界
+## 依赖清单
 ## Gotchas
-
-{>= 5 条}
-
 ## 流程
-
-{按顺序的操作步骤}
-
+  0. 前置依赖检查（含 skill-kit / init_skill_python）
+  ...
 ## references
-
-- `references/{file}.md`：{触发条件}
-
 ## 执行后复盘（自迭代钩子）
-
-{自动反思 + 记录 PITFALLS_LOG.md}
 ```
+
+## 目录骨架（与 skill-kit 对齐）
+
+```
+{skill-name}/
+├── SKILL.md
+├── scripts/
+├── references/
+├── evals/
+├── vendor/python-packages/   # 若依赖第三方 Py 库
+└── tools/                    # 可选，skill 独占便携工具
+```
+
+Read references/portable-tools.md when 编写 scripts 或声明依赖。
 
 ## frontmatter 白名单
 

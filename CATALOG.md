@@ -21,7 +21,7 @@
 | gitlab-repo-upload | platform-engineering | v0.3.0 | universal | `skills/platform-engineering/gitlab-repo-upload` | 已发布 |
 | local-skill-runtime | platform-engineering | v0.1.0 | universal | `skills/platform-engineering/local-skill-runtime` | 已发布 |
 | session-to-rules | platform-engineering | v0.0.0 | cursor | `skills/platform-engineering/session-to-rules` | 已发布 |
-| skill-bootstrap | platform-engineering | v0.2.0 | universal | `skills/platform-engineering/skill-bootstrap` | 已发布 |
+| skill-bootstrap | platform-engineering | v0.3.0 | universal | `skills/platform-engineering/skill-bootstrap` | 已发布 |
 | skill-discipline | platform-engineering | v0.0.0 | universal | `skills/platform-engineering/skill-discipline` | 已发布 |
 | skill-env-setup | platform-engineering | v0.5.0 | universal | `skills/platform-engineering/skill-env-setup` | 已发布 |
 | skill-hub-management | platform-engineering | v0.0.0 | universal | `skills/platform-engineering/skill-hub-management` | 已发布 |
@@ -61,7 +61,7 @@
 | gitlab-repo-upload | v0.3.0 | 当用户要求将本地项目、代码或文件夹上传/推送到 GitLab 仓库时触发。涵盖 git init、.gitignore 配置、remote add、commit… |
 | local-skill-runtime | v0.1.0 | 当用户要求检查、诊断、修复或调优本机已安装的 Qoder Skills 运行环境（skill-kit、vendor 链接、Hub 版本）时触发。适用于日常「把设… |
 | session-to-rules | v0.0.0 | Extracts durable knowledge from the current workspace project only into that pro… |
-| skill-bootstrap | v0.2.0 | 当用户要求新建、创建、编写或做一个 Agent Skill 时触发。引导作者按 7 门禁质量标准从零创建高质量 Agent Skill，覆盖领域确认、Gotch… |
+| skill-bootstrap | v0.3.0 | 当用户要求新建、创建、编写或做一个 Agent Skill 时触发。引导作者按 7 门禁质量标准从零创建高质量 Agent Skill，覆盖领域确认、Gotch… |
 | skill-discipline | v0.0.0 | 会话开始时、接到任何任务时、以及想跳过流程直接动手时，必须先过此 skill。它不干具体活，只确保你不会绕过其他 skill。不适用于：用户明确说"直接做""不… |
 | skill-env-setup | v0.5.0 | 当用户首次配置 Qoder Skills 环境、初始化 skill 安装目录、检测内网零预装依赖与 GitLab 连通性时触发。默认先安装 skill-kit … |
 | skill-hub-management | v0.0.0 | >- |

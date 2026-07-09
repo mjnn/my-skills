@@ -11,6 +11,7 @@ description: 当用户要求新建、创建、编写或做一个 Agent Skill 时
 1. 在完成第三步（自检清单全部通过）之前，禁止将 skill 提交到 skill registry、禁止声称 skill 已就绪、禁止跳过任何门禁步骤。
 2. 涉及信息收集时，必须使用 AskUserQuestion 工具提供结构化选项，禁止纯文本提问。
 3. 涉及执行动作的 skill 必须指示使用 EnterSpecMode/ExitSpecMode，禁止跳过计划审核。
+4. **未创建 tag 和 release 的技能视为未发布** — 禁止将没有对应 Git tag 和 GitLab Release 的 skill 标记为"已发布"或写入 skill-browser.md。
 </HARD-GATE>
 
 ## 能力边界与引导
@@ -25,6 +26,17 @@ description: 当用户要求新建、创建、编写或做一个 Agent Skill 时
 | skill 归档管理 | 手动归档 | 标记 DEPRECATED，移至 archive/ 域 |
 
 > **关键判别**：如果目标 skill 已存在于仓库中（有 SKILL.md 文件），引导用户使用 **skill-update**；如果是全新的（从零开始），使用 **skill-bootstrap**（本技能）。
+
+### 本技能负责
+- 从零创建新 skill 的完整流程（领域确认 → Gotchas 提炼 → 正文+eval 编写 → 自检 → 发布）
+- 指导作者按 7 门禁质量标准完成 skill 创建
+- skill 的结构规范、格式预检、版本管理和发布
+
+### 本技能不负责
+- 更新/修改已有 skill → 使用 **skill-update**
+- 评估已有 skill 质量 → 手动走 **skill-audit** 流程
+- skill 归档管理 → 手动标记 DEPRECATED 并移至 archive/ 域
+- 具体的代码实现（被创建 skill 的业务逻辑由作者自行实现）
 
 ## Gotchas
 
@@ -42,7 +54,15 @@ description: 当用户要求新建、创建、编写或做一个 Agent Skill 时
 
 7. **正文中用纯文本提问而非 AskUserQuestion** — 写 `> "请确认：1.xxx 2.xxx"` 导致用户需要手动输入。**纠正：所有面向用户的提问，必须明确指示使用 AskUserQuestion 工具，提供 2-4 个选项。**
 
+8. **假设系统已装 Python/pip 并在线装库** — 内网零预装环境会整体失败。**纠正：Read references/portable-tools.md；共享 Python 用 skill-kit；专属库放 vendor/python-packages/；流程第一步 init_skill_python.ps1。**
+
 ## 流程
+
+
+
+### 运行时说明（无脚本）
+
+本 skill 以对话与流程引导为主，不直接执行脚本。若会话中需要运行**本 skill 或其他 skill 的 scripts/**，必须先确认 skill-kit 已就绪（Read skill-kit `references/preflight.md`）；未就绪则引导用户运行 **skill-env-setup**。
 
 ### 第零步：确认领域
 
@@ -59,11 +79,17 @@ description: 当用户要求新建、创建、编写或做一个 Agent Skill 时
    {skill-name}/
    ├── SKILL.md
    ├── references/       # 可选
-   ├── scripts/          # 可选
+   ├── scripts/          # 可选；须用 $env:QODER_PYTHON，见 portable-tools.md
+   ├── vendor/
+   │   └── python-packages/   # 若需第三方 Py 库（离线 wheel 解压内容）
+   ├── tools/            # 可选：本 skill 独占便携工具
+   │   └── manifest.json
    └── evals/
        ├── evals.json
        └── eval_queries.json
    ```
+
+Read references/portable-tools.md。
 
 ### 第一步：提炼 Gotchas
 
@@ -96,6 +122,35 @@ Read references/gotchas-criteria.md for detailed criteria.
    - 正文超过 **300 行**时提醒拆分到 references/，超过 **500 行**自检查不过
 4. **references/**：条件加载指令（"Read references/xxx.md if ..." 放在正文中）
 5. **执行后自迭代钩子（必装）**：每个 skill 的流程末尾必须包含复盘步骤
+
+6. **能力边界与依赖清单（必装）**：每个 skill 必须包含独立的「能力边界」和「依赖清单」章节
+   - **能力边界**：明确本技能「负责什么」和「不负责什么」
+   - **依赖清单**：skill-kit（共享 Python/Git）、本 skill `vendor/python-packages`、其他 Agent Skill
+   - **边界判定原则**：Python/Git 安装属 skill-kit + skill-env-setup，业务 skill 不得重复打包解释器
+
+7. **便携工具规范（必装，若含 scripts/ 或 Py 依赖）**：Read references/portable-tools.md
+   - scripts 使用 `$env:QODER_PYTHON`，禁止裸 `python`/`pip install`
+   - 第三方库离线放入 `vendor/python-packages/`
+   - 流程含 `init_skill_python.ps1 -SkillDir <本 skill 根>`
+
+8. **前置依赖检查（必装）**：如果依赖清单中包含其他 Agent Skill（非内置工具），skill 流程的**第一步**必须是前置依赖检查
+   - **检查方法**：查看当前会话的 `<available_skills>` 列表，或检查 `%USERPROFILE%\.qoder-cn\skills\`（Windows）/ `~/.qoder-cn/skills/`（Unix）目录下是否存在依赖的技能
+   - **依赖可用** → 直接进入流程下一步
+   - **依赖不可用** → 使用 AskUserQuestion 工具提示用户，选项包括：
+     - "继续执行"（推荐）— 在没有依赖技能的情况下继续，手动完成对应步骤
+     - "先安装依赖" — 暂停任务，提供依赖清单中的拉取命令
+     - "取消任务" — 终止当前任务
+   - **用户选择"继续执行"** → 记录限制，在流程中依赖技能的调用点提示用户手动完成
+   - **用户选择"先安装依赖"** → 提供安装命令，等待用户确认安装完成后再继续
+   - **用户选择"取消任务"** → 终止执行
+   - **模板写法**：
+     ```markdown
+     0. **前置依赖检查** — 检查 `<dependency-skill-name>` 技能是否在当前环境中可用（查看 `<available_skills>` 列表或检查 skills 目录）。如果不可用，使用 AskUserQuestion 工具提示用户：
+        - 问题："本技能需要 <dependency-skill-name> 技能，但当前环境未安装。是否继续？"
+        - 选项 1（推荐）："继续执行" — 在没有依赖的情况下继续
+        - 选项 2："先安装依赖" — 提供安装命令
+        - 选项 3："取消任务" — 终止当前任务
+     ```
 
 Read references/skill-structure.md for detailed structure requirements.
 
@@ -183,6 +238,13 @@ Spec 内容必须包含：
 [ ] 11. 正文末尾包含「执行后复盘（自迭代钩子）」章节
 [ ] 12. 如 skill 涉及向用户提问，正文中明确指示使用 AskUserQuestion 工具
 [ ] 13. 如 skill 涉及执行动作，正文中明确指示使用 EnterSpecMode/ExitSpecMode
+[ ] 14. 正文中包含「能力边界」章节，明确本技能负责和不负责的范围
+[ ] 15. 正文中包含「依赖清单」章节，列出依赖的技能/工具及拉取方式
+[ ] 16. 如依赖清单包含其他 Agent Skill，流程第一步包含前置依赖检查（检查可用性 + AskUserQuestion 降级处理）
+[ ] 17. 如含 scripts/ 或 Py 库：符合 portable-tools.md（vendor、QODER_PYTHON、无 pip install）
+[ ] 18. 流程含「步骤 0：skill-kit 就绪检查」（见 skill-kit references/preflight.md）；未就绪时引导 skill-env-setup，禁止裸 python/git
+[ ] 19. 已创建 `<skill-name>/v<version>` tag 并推送到远程
+[ ] 20. 已通过 GitLab API 创建对应 Release（含完整描述）
 ```
 
 ### 第四步：格式预检
@@ -198,11 +260,13 @@ Spec 内容必须包含：
 
 输出创建完成报告，包含：
 - skill 名称、域、预期版本号（v0.1.0）
-- 自检清单结果（13/13）
+- 自检清单结果（20/20）
 - eval 用例数 + 触发测试数
 - 下一步行动：提交到 skill registry -> CI 自动运行门禁 2-4 -> 人工审核
 
-**发布到 Skill Hub（Tag + Release）：**
+**发布到 Skill Hub（Tag + Release —— 强制步骤，不可跳过）：**
+
+> **HARD-GATE：未创建 tag 和 release 的技能视为未发布。自检清单第 19-20 项未通过前，禁止向用户报告"发布完成"。**
 
 自检和格式预检通过后，使用 AskUserQuestion 工具确认提交方式：
 
@@ -212,6 +276,8 @@ Spec 内容必须包含：
 |------|--------|------|
 | 你的 GitLab 角色是？ | 角色确认 | Maintainer（可直接 push）/ Developer（需走 PR）/ 不确定 |
 | 提交方式？ | 提交方式 | 创建 PR（推荐）/ 直接 push 到 main |
+
+> **便携 Git / Python**：发布阶段命令中的 `git` 替换为 `& $env:QODER_GIT`；`python -c` 替换为 `& $env:QODER_PYTHON -c`。须先通过步骤 0 skill-kit 检查。
 
 **路径 A：PR 流程（Developer 或选择 PR 的 Maintainer）**
 
@@ -234,7 +300,12 @@ curl -s -X POST "https://<host>/api/v4/projects/<project_id>/merge_requests" \
     "source_branch": "feature/<skill-name>-v<version>",
     "target_branch": "main",
     "title": "Add <skill-name> skill v<version>",
-    "description": "## 自检清单结果\n\n- [x] 1. SKILL.md frontmatter\n- [x] 2. name 与目录名一致\n...\n- [x] 13. EnterSpecMode/ExitSpecMode\n\n## 质量指标\n\n- Gotchas: X 条\n- Eval 用例: X 条\n- 触发测试: X 条"
+    "description": "## 自检清单结果\n\n- [x] 1. SKILL.md frontmatter\n- [x] 2. name 与目录名一致\n...\n- [x] 13. EnterSpecMode/ExitSpecMode
+- [x] 14. 能力边界章节
+- [x] 15. 依赖清单章节
+- [x] 16. 前置依赖检查（如适用）
+- [x] 17. tag 已创建
+- [x] 18. Release 已创建\n\n## 质量指标\n\n- Gotchas: X 条\n- Eval 用例: X 条\n- 触发测试: X 条"
   }'
 ```
 
@@ -332,13 +403,13 @@ description 必须包含以下章节：
 | 拉取方式 | Zip 下载链接 + `git clone --filter=blob:none --sparse --branch <skill-name>/v<version> <repo-url>` |
 | 技能路径 | `skills/<domain>/<skill-name>/` |
 
-**示例：**
+**示例（中文 Release 描述）：**
 
 ```json
 {
   "tag_name": "ask-before-act/v0.1.0",
   "name": "ask-before-act v0.1.0",
-  "description": "## ask-before-act v0.1.0\n\n### 技能描述\n\n当Agent不确定用户诉求...\n\n### 核心功能\n\n- 意图确定性评估...\n\n### 质量指标\n\n| 指标 | 数量 |\n| Gotchas | 5 条 |\n| Eval 用例 | 7 条 |\n\n### 关键 Gotchas\n\n1. 使用纯文本提问而非 AskUserQuestion 工具\n2. ...\n\n### 拉取方式\n\n```bash\ngit clone --branch ask-before-act/v0.1.0 https://epfa-gitlab.csvw.com/ecc-2/qoder-skills.git\n```\n\n### 技能路径\n\n```\nskills/platform-engineering/ask-before-act/\n```"
+  "description": "## ask-before-act v0.1.0\n\n### 技能描述\n\n当Agent不确定用户诉求、任务细节或执行方向时，使用AskUserQuestion工具向用户提出结构化问题，明确用户意图后再继续执行。\n\n### 核心功能\n\n- 意图确定性评估（≥80%确定性阈值）\n- 使用AskUserQuestion工具进行结构化提问\n- 澄清后复述确认机制\n- 分轮次提问避免overwhelm用户\n\n### 质量指标\n\n| 指标 | 数量 |\n|------|------|\n| Gotchas | 5 条 |\n| Eval 用例 | 7 条 |\n| 触发测试 | 16 条 |\n\n### 关键 Gotchas\n\n1. 使用纯文本提问而非 AskUserQuestion 工具\n2. 用户说'随便'时自由发挥\n3. 澄清后未复述确认直接执行\n4. 一次抛出太多问题 overwhelm 用户\n5. 用户意图已明确仍反复确认\n\n### 拉取方式\n\n```bash\ngit clone --branch ask-before-act/v0.1.0 https://epfa-gitlab.csvw.com/ecc-2/qoder-skills.git\n```\n\n### 技能路径\n\n```\nskills/platform-engineering/ask-before-act/\n```"
 }
 ```
 
@@ -375,9 +446,47 @@ curl -s -X DELETE "https://epfa-gitlab.csvw.com/api/v4/projects/289/releases/ask
 
 > **注意**：DELETE 只删除 Release 元数据，不影响 git tag 和代码历史。tag 仍然保留在仓库中。
 
+**同步仓库文档（强制步骤，不可跳过）：**
+
+Release 创建完成后，必须同步更新仓库中的管理文档，确保版本号、Release 链接、Zip 下载链接三者一致：
+
+| 文档 | 更新内容 |
+|------|---------|
+| README.md | 已上架 Skill 表格：版本号、Release 链接、Zip 下载链接（三者必须一致） |
+| CATALOG.md | 注册表条目：版本号、描述、最后更新日期 |
+| docs/skill-browser.md | 技能总览 + 详细条目：版本号、Zip 下载链接、Release 链接、Sparse Checkout 命令 |
+
+文档同步检查清单：
+
+- [ ] README.md 版本号已更新
+- [ ] README.md Release 链接已更新
+- [ ] README.md Zip 下载链接已更新（raw 格式）
+- [ ] CATALOG.md 版本号已更新
+- [ ] CATALOG.md 描述已更新
+- [ ] CATALOG.md 日期已更新
+- [ ] docs/skill-browser.md 版本号已更新
+- [ ] docs/skill-browser.md Zip 下载链接已更新（raw 格式）
+- [ ] docs/skill-browser.md Sparse Checkout 分支已更新
+
+> **版本信息同步规范**：README.md、CATALOG.md 和 docs/skill-browser.md 中的版本号、Release 链接和 Zip 下载链接三者必须保持一致。使用 `grep` 检查所有版本号引用是否一致后再提交。
+
+## 依赖清单
+
+| 依赖项 | 类型 | 说明 | 拉取方式 |
+|--------|------|------|---------|
+| AskUserQuestion | 内置工具 | 向用户收集信息时提供结构化选项 | 内置，无需拉取 |
+| EnterSpecMode / ExitSpecMode | 内置工具 | 执行动作前的计划审核 | 内置，无需拉取 |
+| skill-kit | Agent Skill | 共享便携 Python/Git/7za | skill-env-setup 节点 4.0 安装；或 Hub zip 中的 skill-kit |
+| skill-env-setup | Agent Skill | 首次环境初始化（可选，作者本机若已配置可跳过） | 初始化技能包 |
+| git（便携） | skill-kit 工具 | 版本控制、tag 和 release | `$env:QODER_GIT`，非系统 git |
+| GitLab API | 内网 HTTP | 创建 MR/Release | 便携 Python `urllib` 或 PowerShell `Invoke-RestMethod` |
+
+> **说明**：禁止假设系统 git/curl/python。发布阶段 git 操作引用 `gitlab-repo-upload` 命令范式，但须将 `git` 替换为 `$env:QODER_GIT`。
+
 ## references
 
 - `references/skill-structure.md`：SKILL.md 详细结构规范。在第二步编写正文时读取。
+- `references/portable-tools.md`：**便携工具与 vendor 规范**。编写 scripts/ 或打包 Py 依赖时读取。
 - `references/gotchas-criteria.md`：Gotchas 提炼标准。在第一步提炼 Gotchas 时读取。
 - `references/eval-guidelines.md`：eval 用例设计指南。在第二步设计 eval 时读取。
 

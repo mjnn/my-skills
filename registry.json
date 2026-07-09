@@ -193,9 +193,9 @@
       "domain": "platform-engineering",
       "platform": "universal",
       "description": "当用户要求新建、创建、编写或做一个 Agent Skill 时触发。引导作者按 7 门禁质量标准从零创建高质量 Agent Skill，覆盖领域确认、Gotchas 提炼、正文+eval 交替编写、自检清单、格式预检、产出报告全链路。不适用于：修改已有 skill（走 skill-update）、单纯讨论 skill 设计而不创建、评估第三方 skill（走 skill-audit 流程）、已有 skill 的归档管理。",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "path": "skills/platform-engineering/skill-bootstrap",
-      "asset": "assets/skill-bootstrap-v0.2.0.zip",
+      "asset": "assets/skill-bootstrap-v0.3.0.zip",
       "quality": {
         "gated": true,
         "evalCoverage": "see evals/",
